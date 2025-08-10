@@ -27,7 +27,7 @@ function App() {
   return (
     <>
         
-     { tracks.length === 0  && <a href="https://factory-hiqy.onrender.com/">
+     { tracks.length === 0  && <a href="https://myspotifylib.onrender.com/auth/login">
                                   <button>Login with Spotify</button>
                               </a> 
       }
