@@ -50,7 +50,7 @@ const getAccessToken = async (req,res) =>{
                 console.log("refresh_token:"+refresh_token);
 
                   console.log("calling spotifyService.fetchUserId");
-                  const userResponse = await spotifyService.fetchUserId();
+                  const userResponse = await spotifyService.fetchUserId(access_token);
                   const userId = userResponse.data.id;
                   
                   console.log("userId: "+userId);

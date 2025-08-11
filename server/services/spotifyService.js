@@ -23,7 +23,7 @@ const fetchAccessToken =  (spotifyCode) =>{
 }
 
 
-const fetchUserId = () =>{
+const fetchUserId = (access_token) =>{
 
         return  axios.get( process.env.SPOTIFY_USER_API_URL, {
                     headers: {
