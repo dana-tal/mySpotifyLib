@@ -1,8 +1,12 @@
-import dotenv from 'dotenv';
-dotenv.config();
 
 import axios from 'axios';
-import errlogger from '../utils/errorLogger.js';
+import errLogger from '../utils/errorLogger.js';
+import infoLogger from '../utils/infoLogger.js';
+import spotifyService from '../services/spotifyService.js';
+
+// const log_row = JSON.stringify(summary);
+  //     actionsLogger.info(log_row);
+
 
 
 const client_id = process.env.SPOTIFY_CLIENT_ID;
@@ -36,32 +40,54 @@ const getAccessToken = async (req,res) =>{
     const code = req.query.code; // read the temporary code returned from spotify 
 
       console.log("code="+code);
-    const body = new URLSearchParams({     // this is the information to be sent to Spotify in order to get the access token
-                grant_type: 'authorization_code',
-                code,
-                redirect_uri,
-            });
-    
+  
+
       try {
-                const tokenResponse = await axios.post(process.env.SPOTIFY_TOKEN_API_URL, body, {
-                headers: {
-                    'Authorization': 'Basic ' + Buffer.from(`${client_id}:${client_secret}`).toString('base64'),
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                });
-
+                console.log("calling spotifyService.getAccessToken");
+                const tokenResponse = await spotifyService.fetchAccessToken(code);
                 const access_token = tokenResponse.data.access_token;
-                console.log("access_token:"+access_token)
+                const refresh_token = tokenResponse.data.refresh_token;
+                console.log("access_token:"+access_token);
+                console.log("refresh_token:"+refresh_token);
 
-                res.redirect(`${process.env.CLIENT_SIDE_URL}?access_token=${access_token}`);  // redirect to the client side 
+                  console.log("calling spotifyService.fetchUserId");
+                  const userResponse = await spotifyService.fetchUserId();
+                  const userId = userResponse.data.id;
+                  
+                  console.log("userId: "+userId);
+                req.session.userId = userId;
+                req.session.refresh_token = refresh_token;
+
+                res.redirect(`${process.env.CLIENT_SIDE_URL}?access_token=${access_token}&userId=${userId}`);      // redirect to the client side          
 
             } 
             catch (err) 
             {
-                 errlogger.error(`login failed: ${err.message}`, { stack: err.stack });
+                 errLogger.error(`getAccessToken failed: ${err.message}`, { stack: err.stack });
                 return res.status(500).json(err);                 
             }
 };
 
 
-export default { getTempCode ,getAccessToken}
+const refreshAccessToken = async (req, res) => {
+  const refreshToken = req.session.refresh_token;
+  if (!refreshToken) 
+  {
+    return res.status(401).json({ error: 'No refresh token in session' });
+  }
+
+  try 
+  {
+        const response = await spotifyService.refetchAccessToken(refreshToken);
+        const new_access_token = response.data.access_token;
+        res.json({ access_token: new_access_token });
+  } 
+  catch (err) 
+  {
+     errLogger.error(`refreshAccessToken failed: ${err.message}`, { stack: err.stack });                
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+
+export default { getTempCode ,getAccessToken, refreshAccessToken}
