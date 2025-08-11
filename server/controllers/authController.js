@@ -1,5 +1,4 @@
 
-import axios from 'axios';
 import errLogger from '../utils/errorLogger.js';
 import infoLogger from '../utils/infoLogger.js';
 import spotifyService from '../services/spotifyService.js';
