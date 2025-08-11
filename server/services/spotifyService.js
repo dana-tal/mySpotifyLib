@@ -9,7 +9,7 @@ const fetchAccessToken =  (spotifyCode) =>{
 
     const body = new URLSearchParams({     // this is the information to be sent to Spotify in order to get the access token
                 grant_type: 'authorization_code',
-                spotifyCode,
+                code:spotifyCode,
                 redirect_uri,
             });
 
