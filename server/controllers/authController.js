@@ -92,11 +92,13 @@ const refreshAccessToken = async (req, res) => {
 
 const getAccessToken = (req,res)=>{
 
-     
+     console.log("inside getAccessToken");
+
       const response = { 
                             userId: req.session.userId ,
                             accessToken: req.session.access_token 
                         }
+      console.log( response);
       res.json (response);                       
 }
 
