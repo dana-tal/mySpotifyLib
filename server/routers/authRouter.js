@@ -5,8 +5,10 @@ const router = express.Router();
 
 
 router.get('/login',authController.getTempCode);
-router.get('/spotify-callback',authController.getAccessToken);
+router.get('/spotify-callback',authController.setAccessToken);
 router.post('/refresh-token', authController.refreshAccessToken);
+router.get('/access-token', authController.getAccessToken);
+
 //router.post('/logout',authController.logout);
 
 export default router;

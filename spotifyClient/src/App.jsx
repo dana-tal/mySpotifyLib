@@ -5,21 +5,35 @@ import axios from 'axios';
 
 function App() {
   
+  
   const [tracks, setTracks] = useState([]);
 
   useEffect(() => {
-    const token = new URLSearchParams(window.location.search).get('access_token');
-    if (!token) return;
+   let token;
 
-    axios.get('https://api.spotify.com/v1/me/tracks', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).then(response => {
-      setTracks(response.data.items);
-      console.log(tracks);
+     const login_resp =  new URLSearchParams(window.location.search).get('login');
+     if (!login_resp)
+      return;
+     if ( login_resp==='success')
+     {
+          token_response = axios.get('https://myspotifylib.onrender.com/auth/access-token' );
+          token = token_response.data.accessToken;
+          userId = token_response.data.userId;
 
-    });
+          console.log("token="+token);
+          console.log("userId="+userId);
+
+        axios.get('https://api.spotify.com/v1/me/tracks', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).then(response => {
+          setTracks(response.data.items);
+          console.log(tracks);
+        }); 
+
+     }
+
   }, []);
 
 // "https://myspotifylib.onrender.com/auth/login

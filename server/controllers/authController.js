@@ -33,7 +33,7 @@ const getTempCode = (req,res)=>{
 }
 
 
-const getAccessToken = async (req,res) =>{
+const setAccessToken = async (req,res) =>{
 
       console.log("Inside getAccessToken");
     const code = req.query.code; // read the temporary code returned from spotify 
@@ -55,9 +55,11 @@ const getAccessToken = async (req,res) =>{
                   
                   console.log("userId: "+userId);
                 req.session.userId = userId;
+                req.session.access_token = access_token;
                 req.session.refresh_token = refresh_token;
 
-                res.redirect(`${process.env.CLIENT_SIDE_URL}?access_token=${access_token}&userId=${userId}`);      // redirect to the client side          
+              //  res.redirect(`${process.env.CLIENT_SIDE_URL}?access_token=${access_token}&userId=${userId}`);      // redirect to the client side    
+              res.redirect(`${process.env.CLIENT_SIDE_URL}?login=success`);      
 
             } 
             catch (err) 
@@ -88,5 +90,15 @@ const refreshAccessToken = async (req, res) => {
   }
 };
 
+const getAccessToken = (req,res)=>{
 
-export default { getTempCode ,getAccessToken, refreshAccessToken}
+     
+      const response = { 
+                            userId: req.session.userId ,
+                            accessToken: req.session.access_token 
+                        }
+      res.json (response);                       
+}
+
+
+export default { getTempCode ,setAccessToken, refreshAccessToken, getAccessToken}
