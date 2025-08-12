@@ -15,11 +15,17 @@ const isProd = process.env.NODE_ENV === 'production';
 
  const app = express();
 
+ /*
 app.use(cors({
   origin: isProd ? 'https://your-production-client-url.com' : 'http://localhost:5173',
   credentials: true,
 }));
+*/
 
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
