@@ -9,18 +9,31 @@ dotenv.config();
 
 import authRouter from './routers/authRouter.js';
 
+const isProd = process.env.NODE_ENV === 'production';
+
  const PORT = process.env.PORT || 3000;
 
  const app = express();
 
- app.use(session({
+app.use(cors({
+  origin: isProd ? 'https://your-production-client-url.com' : 'http://localhost:5173',
+  credentials: true,
+}));
+
+
+app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: true } 
+  cookie: {
+    secure: isProd,               // true on production ,false in dev
+    httpOnly: true,
+    sameSite: isProd ? 'none' : 'lax',
+  }
 }));
+
  
- app.use( cors());
+
  app.use(express.json());
 
  app.get("/", (req, res) => {

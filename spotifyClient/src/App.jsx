@@ -10,40 +10,41 @@ function App() {
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
 
-  useEffect(() => {
-   let token;
+  const getMyToken = async () => {
+    return axios.get('https://myspotifylib.onrender.com/auth/access-token', {
+      withCredentials: true
+    });
+  };
 
 
-     const getMyToken = async ()=>{
-           const token_response = await axios.get('https://myspotifylib.onrender.com/auth/access-token' );
+    useEffect(() => {
+    const loginResp = new URLSearchParams(window.location.search).get('login');
+    if (loginResp !== 'success') return;
 
-          console.log("token response:");
-          console.log(token_response);
+    const fetchData = async () => {
+      try {
+        const tokenResponse = await getMyToken();
+        const accessToken = tokenResponse.data.accessToken;
+        setToken(accessToken);
+        setUserId(tokenResponse.data.userId);
 
-          console.log ("accessToken="+token_response.data.accessToken)
-           setToken( token_response.data.accessToken);
-           setUserId( token_response.data.userId);
-     }
-
-     const login_resp =  new URLSearchParams(window.location.search).get('login');
-     if (!login_resp)
-      return;
-     if ( login_resp==='success')
-     {
-         getMyToken();
-          
-        axios.get('https://api.spotify.com/v1/me/tracks', {
+        const tracksResponse = await axios.get('https://api.spotify.com/v1/me/tracks', {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${accessToken}`
           }
-        }).then(response => {
-          setTracks(response.data.items);
-          console.log(tracks);
-        }); 
+        });
 
-     }
+        setTracks(tracksResponse.data.items);
+        console.log(tracksResponse.data.items);
 
+      } catch (err) {
+        console.error('Error fetching data', err);
+      }
+    };
+
+    fetchData();
   }, []);
+
 
 // "https://myspotifylib.onrender.com/auth/login
 
