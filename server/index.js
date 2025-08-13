@@ -11,9 +11,16 @@ import authRouter from './routers/authRouter.js';
 
 const isProd = process.env.NODE_ENV === 'production';
 
+console.log("is prod:");
+console.log(isProd);
+
  const PORT = process.env.PORT || 3000;
 
  const app = express();
+
+ if (isProd) {
+  app.set('trust proxy', 1);
+}
 
  /*
 app.use(cors({
@@ -22,12 +29,17 @@ app.use(cors({
 }));
 */
 
-app.use(cors({
+const corsConfig = {
   origin: process.env.CLIENT_SIDE_URL,
   credentials: true,
-}));
+}
 
-app.use(session({
+console.log("corsConfig:");
+console.log(corsConfig);
+
+app.use(cors(corsConfig));
+
+const sessionConfig = {
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
@@ -36,7 +48,12 @@ app.use(session({
     httpOnly: true,
     sameSite: isProd ? 'none' : 'lax',
   }
-}));
+};
+
+console.log("sessionConfig");
+console.log(sessionConfig);
+
+app.use(session(sessionConfig));
 
  
 

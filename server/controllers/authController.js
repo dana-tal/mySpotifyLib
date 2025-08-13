@@ -58,8 +58,18 @@ const setAccessToken = async (req,res) =>{
                 req.session.access_token = access_token;
                 req.session.refresh_token = refresh_token;
 
+                 // Force session to save before redirecting
+              req.session.save(err => {
+                  if (err) {
+                      console.error("Session save error:", err);
+                      return res.status(500).send("Session save failed");
+                  }
+                   console.log("Session saved successfully!");
+                  res.redirect(`${process.env.CLIENT_SIDE_URL}?login=success`);      
+              });
+
               //  res.redirect(`${process.env.CLIENT_SIDE_URL}?access_token=${access_token}&userId=${userId}`);      // redirect to the client side    
-              res.redirect(`${process.env.CLIENT_SIDE_URL}?login=success`);      
+            
 
             } 
             catch (err) 
@@ -81,7 +91,13 @@ const refreshAccessToken = async (req, res) => {
   {
         const response = await spotifyService.refetchAccessToken(refreshToken);
         const new_access_token = response.data.access_token;
-        res.json({ access_token: new_access_token });
+        req.session.access_token = new_access_token;
+        req.session.save(err => {
+                                    if (err) 
+                                      console.error('Session save error:', err);
+                                    res.json({ access_token: new_access_token });
+                                });
+       
   } 
   catch (err) 
   {
@@ -94,6 +110,10 @@ const getAccessToken = (req,res)=>{
 
      console.log("inside getAccessToken");
 
+       if (!req.session.access_token)
+        {
+            return res.status(401).json({ error: 'No access token' });
+        }
       const response = { 
                             userId: req.session.userId ,
                             accessToken: req.session.access_token 
