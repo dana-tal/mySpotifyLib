@@ -35,7 +35,7 @@ const getTempCode = (req,res)=>{
 
 const setAccessToken = async (req,res) =>{
 
-      console.log("Inside getAccessToken");
+      console.log("Inside setAccessToken");
     const code = req.query.code; // read the temporary code returned from spotify 
 
       console.log("code="+code);
