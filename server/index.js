@@ -71,21 +71,26 @@ app.use(session(sessionConfig));
 });
 app.use('/auth', authRouter);
 
-// API 404 (only triggers if no API matched)
-app.use('/api/*', (req, res) => {
+
+app.use('/api', (req, res, next) => {
   res.status(404).json({ error: 'API route not found' });
 });
 
 // Path to client build
 const clientBuildPath = path.join(__dirname, '../spotifyClient/dist');
 
+
 // Serve React static files
 app.use(express.static(clientBuildPath));
 
+
+
 // React router
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(clientBuildPath, 'index.html'));
-});
+ app.get(/.*/, (req, res) => {
+   res.sendFile(path.join(clientBuildPath, 'index.html'));
+ });
+
+
 
 
 app.listen(PORT, ()=>{
