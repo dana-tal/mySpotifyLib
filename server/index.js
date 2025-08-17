@@ -3,11 +3,17 @@ import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import dotenv from 'dotenv';
 dotenv.config();
 
 
 import authRouter from './routers/authRouter.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -60,15 +66,27 @@ app.use(session(sessionConfig));
 
  app.use(express.json());
 
- app.get("/", (req, res) => {
+ app.get("/api", (req, res) => {
   res.send("API is running");
 });
 app.use('/auth', authRouter);
 
-// Catch-all 404 middleware 
-app.use((req, res, next) => {
-    res.status(404).json({ error: 'Route not found' });
+// API 404 (only triggers if no API matched)
+app.use('/api/*', (req, res) => {
+  res.status(404).json({ error: 'API route not found' });
 });
+
+// Path to client build
+const clientBuildPath = path.join(__dirname, '../spotifyClient/dist');
+
+// Serve React static files
+app.use(express.static(clientBuildPath));
+
+// React router
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(clientBuildPath, 'index.html'));
+});
+
 
 app.listen(PORT, ()=>{
    console.log(`Listening on port: ${PORT}`) ;
