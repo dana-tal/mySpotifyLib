@@ -3,6 +3,10 @@ import errLogger from '../utils/errorLogger.js';
 import infoLogger from '../utils/infoLogger.js';
 import spotifyService from '../services/spotifyService.js';
 
+
+import dotenv from 'dotenv';
+dotenv.config();
+
 // const log_row = JSON.stringify(summary);
   //     actionsLogger.info(log_row);
 
@@ -17,6 +21,10 @@ const redirect_uri =  process.env.REDIRECT_URI;
 
 const getTempCode = (req,res)=>{
        console.log("inside getTempCode");
+
+       console.log("redirect_uri:");
+       console.log(redirect_uri)
+
        const scope = 'user-library-read user-read-email'; // this is how to ask spotify to give access permission to the user library
 
         const authUrl = process.env.SPOTIFY_AUTHORIZE_URL+'?' +

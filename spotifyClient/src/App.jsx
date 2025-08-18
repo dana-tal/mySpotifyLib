@@ -3,6 +3,10 @@ import Library from './components/Library';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const DOMAIN = import.meta.env.VITE_APP_DOMAIN;
+
+console.log("my domain:"+DOMAIN);
+
 function App() {
   
   
@@ -11,7 +15,7 @@ function App() {
   const [userId, setUserId] = useState('');
 
   const getMyToken = async () => {
-    return axios.get('https://myspotifylib.onrender.com/auth/access-token', {
+    return axios.get(DOMAIN+'/auth/access-token', {
       withCredentials: true
     });
   };
@@ -28,7 +32,8 @@ function App() {
         setToken(accessToken);
         setUserId(tokenResponse.data.userId);
 
-        const tracksResponse = await axios.get('https://api.spotify.com/v1/me/tracks', {
+        console.log("songs api:"+import.meta.env.VITE_SPOTIFY_SONGS_ENTRY_POINT);
+        const tracksResponse = await axios.get(import.meta.env.VITE_SPOTIFY_SONGS_ENTRY_POINT, {
           headers: {
             Authorization: `Bearer ${accessToken}`
           }
@@ -51,8 +56,8 @@ function App() {
   return (
     <>
         
-     { tracks.length === 0  && <a href= "https://myspotifylib.onrender.com/auth/login">
-                                  <button>Login with Spotify</button>
+     { tracks.length === 0  && <a href={`${DOMAIN}/auth/login`}>
+                                  <button>Login with Spotify  22</button>
                               </a> 
       }
       { tracks.length >0 && <Library tracks={tracks} />} 
