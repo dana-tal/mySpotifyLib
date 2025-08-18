@@ -53,7 +53,7 @@ const sessionConfig = {
     secure: isProd,               // true on production ,false in dev
     httpOnly: true,
     sameSite: isProd ? 'none' : 'lax',
-     domain: isProd ? '.onrender.com' : undefined  // <-- allow cross-subdomain cookies
+   //  domain: isProd ? '.onrender.com' : undefined  // <-- allow cross-subdomain cookies
   }
 };
 
