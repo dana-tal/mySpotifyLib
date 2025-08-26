@@ -1,13 +1,15 @@
+import Songs from './Songs';
+import Albums from './Albums';
+import Artists from './Artists';
+
 
 function Library(props) {
   return (
     <div>
-      <h1>Saved Songs</h1>
-      <ul>
-        {props.tracks.map(item => (
-          <li key={item.track.id}>{item.track.name} - {item.track.artists[0].name}</li>
-        ))}
-      </ul>
+      <h1 style={{color:"yellow"}}>Welcom To my Library</h1>
+        <Songs isLogged={true} />
+         <Albums albums={true} />
+        <Artists artists={true} />
     </div>
   )
 }
