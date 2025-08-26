@@ -20,12 +20,12 @@ const redirect_uri =  process.env.REDIRECT_URI;
 
 
 const getTempCode = (req,res)=>{
-       console.log("inside getTempCode");
+       //console.log("inside getTempCode");
 
-       console.log("redirect_uri:");
-       console.log(redirect_uri)
+      // console.log("redirect_uri:");
+      // console.log(redirect_uri)
 
-       const scope = 'user-library-read user-read-email'; // this is how to ask spotify to give access permission to the user library
+       const scope = 'user-library-read user-read-email user-follow-read'; // this is how to ask spotify to give access permission to the user library
 
         const authUrl = process.env.SPOTIFY_AUTHORIZE_URL+'?' +
         new URLSearchParams({
@@ -34,8 +34,8 @@ const getTempCode = (req,res)=>{
         scope,
         redirect_uri,
         });  
-        console.log("authUrl:");
-        console.log (authUrl);
+        //console.log("authUrl:");
+        //console.log (authUrl);
         
         res.redirect(authUrl);
 }
@@ -43,25 +43,25 @@ const getTempCode = (req,res)=>{
 
 const setAccessToken = async (req,res) =>{
 
-      console.log("Inside setAccessToken");
+      // console.log("Inside setAccessToken");
     const code = req.query.code; // read the temporary code returned from spotify 
 
-      console.log("code="+code);
+      //console.log("code="+code);
   
 
       try {
-                console.log("calling spotifyService.getAccessToken");
+        //        console.log("calling spotifyService.getAccessToken");
                 const tokenResponse = await spotifyService.fetchAccessToken(code);
                 const access_token = tokenResponse.data.access_token;
                 const refresh_token = tokenResponse.data.refresh_token;
-                console.log("access_token:"+access_token);
-                console.log("refresh_token:"+refresh_token);
+          //      console.log("access_token:"+access_token);
+            //    console.log("refresh_token:"+refresh_token);
 
-                  console.log("calling spotifyService.fetchUserId");
+              //    console.log("calling spotifyService.fetchUserId");
                   const userResponse = await spotifyService.fetchUserId(access_token);
                   const userId = userResponse.data.id;
                   
-                  console.log("userId: "+userId);
+                //  console.log("userId: "+userId);
                 req.session.userId = userId;
                 req.session.access_token = access_token;
                 req.session.refresh_token = refresh_token;
@@ -72,7 +72,7 @@ const setAccessToken = async (req,res) =>{
                       console.error("Session save error:", err);
                       return res.status(500).send("Session save failed");
                   }
-                   console.log("Session saved successfully!");
+                  // console.log("Session saved successfully!");
                   res.redirect(`${process.env.CLIENT_SIDE_URL}?login=success`);      
               });
 
@@ -129,6 +129,8 @@ const getAccessToken = (req,res)=>{
       console.log( response);
       res.json (response);                       
 }
+
+
 
 
 export default { getTempCode ,setAccessToken, refreshAccessToken, getAccessToken}

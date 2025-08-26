@@ -1,7 +1,12 @@
 import Library from './components/Library';
+import Songs from './components/Songs';
+import Albums from './components/Albums';
+import Artists from './components/Artists';
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+
+import { getSongsGroup, getAlbumsGroup, getArtistsList } from './utils/requests';
 
 const DOMAIN = import.meta.env.VITE_APP_DOMAIN;
 
@@ -11,6 +16,9 @@ function App() {
   
   
   const [tracks, setTracks] = useState([]);
+  const [albums, setAlbums] = useState([]);
+  const [artists, setArtists] = useState([]);
+
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
 
@@ -27,20 +35,26 @@ function App() {
 
     const fetchData = async () => {
       try {
-        const tokenResponse = await getMyToken();
+      /*  const tokenResponse = await getMyToken();
         const accessToken = tokenResponse.data.accessToken;
         setToken(accessToken);
         setUserId(tokenResponse.data.userId);
+*/
 
-        console.log("songs api:"+import.meta.env.VITE_SPOTIFY_SONGS_ENTRY_POINT);
-        const tracksResponse = await axios.get(import.meta.env.VITE_SPOTIFY_SONGS_ENTRY_POINT, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        });
+        const mySongs = await getSongsGroup(5,0);
+        //console.log(mySongs);
+        setTracks(mySongs.items);
 
-        setTracks(tracksResponse.data.items);
-        console.log(tracksResponse.data.items);
+        const myAlbums = await getAlbumsGroup(50,0);
+        //console.log( myAlbums.items);
+        setAlbums(myAlbums.items);
+
+        const myArtists = await getArtistsList(50);
+       // console.log ("myArtists:");
+       // console.log(myArtists);
+
+       // console.log(myArtists.artists.items);
+        setArtists(myArtists.artists.items);
 
       } catch (err) {
         console.error('Error fetching data', err);
@@ -60,7 +74,9 @@ function App() {
                                   <button>Login with Spotify  22</button>
                               </a> 
       }
-      { tracks.length >0 && <Library tracks={tracks} />} 
+      { tracks.length >0 && <Songs tracks={tracks} />} 
+      { albums.length >0 && <Albums albums={albums} />}
+      { artists.length >0 && <Artists artists={artists} />}
     </>
   )
 }

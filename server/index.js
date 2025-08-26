@@ -11,14 +11,15 @@ dotenv.config();
 
 
 import authRouter from './routers/authRouter.js';
+import contentRouter from './routers/contentRouter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const isProd = process.env.NODE_ENV === 'production';
 
-console.log("is prod:");
-console.log(isProd);
+// console.log("is prod:");
+// console.log(isProd);
 
  const PORT = process.env.PORT || 3000;
 
@@ -40,8 +41,8 @@ const corsConfig = {
   credentials: true,
 }
 
-console.log("corsConfig:");
-console.log(corsConfig);
+//console.log("corsConfig:");
+//console.log(corsConfig);
 
 app.use(cors(corsConfig));
 
@@ -57,8 +58,8 @@ const sessionConfig = {
   }
 };
 
-console.log("sessionConfig");
-console.log(sessionConfig);
+//console.log("sessionConfig");
+//console.log(sessionConfig);
 
 app.use(session(sessionConfig));
 
@@ -70,6 +71,8 @@ app.use(session(sessionConfig));
   res.send("API is running");
 });
 app.use('/auth', authRouter);
+
+app.use('/content', contentRouter);
 
 
 app.use('/api', (req, res, next) => {

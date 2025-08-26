@@ -50,5 +50,56 @@ const refetchAccessToken = (refreshToken) =>{
 
 }
 
+const getSongsGroup = async (accessToken, limit,page) =>{
 
-export default { fetchAccessToken, fetchUserId, refetchAccessToken }
+  const offset = page * limit;
+
+  const url = process.env.SPOTIFY_SONGS_ENTRY_POINT+`?limit=${limit}&offset=${offset}`;
+   
+
+  const tracksResponse = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+
+  return tracksResponse;
+
+}
+
+const getAlbumsGroup = async (accessToken, limit, page)=>
+{
+    const offset = page * limit;
+
+    const url = process.env.SPOTIFY_ALBUMS_ENTRY_POINT+`?limit=${limit}&offset=${offset}`;
+  
+    const albumsResponse = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+
+    return albumsResponse;
+}
+
+const getArtistsList = async (accessToken, limit,after=null) =>
+{    
+    const url = new URL(process.env.SPOTIFY_ARTISTS_ENTRY_POINT);
+    url.searchParams.set("type", "artist");
+    url.searchParams.set("limit", limit);
+    if (after)
+    {
+      url.searchParams.set("after", after);
+    }
+   
+    const artistsResponse = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+    
+    return artistsResponse;
+}
+
+
+export default { fetchAccessToken, fetchUserId, refetchAccessToken , getSongsGroup, getAlbumsGroup , getArtistsList }
