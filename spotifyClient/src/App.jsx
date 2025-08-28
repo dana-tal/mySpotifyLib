@@ -1,34 +1,36 @@
+import Welcome from './components/Welcome';
 import Library from './components/Library';
-import {Route,Routes} from 'react-router-dom'
-import { useEffect, useState } from 'react';
+import {Route,Routes} from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const DOMAIN = import.meta.env.VITE_APP_DOMAIN;
-
-
+import Songs from './components/Songs';
+import Albums from './components/Albums';
+import Artists from './components/Artists';
 
 function App() {
   
-  const [ isLogged, setIsLogged ] = useState(false);
- 
+  const navigate = useNavigate();
+  
     useEffect(() => {
     const loginResp = new URLSearchParams(window.location.search).get('login');
     if (loginResp !== 'success') return;
-    setIsLogged(true); 
+    navigate("/library");
 
   }, []);
 
-
-
   return (
-    <>
-        
-     { isLogged === false  && <a href={`${DOMAIN}/auth/login`}>
-                                  <button>Login with Spotify  22</button>
-                              </a> 
-      }
-      { isLogged===true && <Library/>} 
-     
-    </>
+    <div style={{ display:"flex" , flexDirection:"column", alignItems:"center"}}>
+
+        <Routes>
+              <Route path="/" element={ <Welcome /> } />
+              <Route path="/library" element={<Library/>} >
+                <Route path="songs" element={<Songs/>} />
+                <Route path="albums" element={<Albums/>} />
+                <Route path="artists" element={<Artists/>} />               
+              </Route>
+        </Routes>
+    </div>
   )
 }
 
