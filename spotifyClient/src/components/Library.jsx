@@ -1,25 +1,22 @@
-/*import Songs from './Songs';
-import Albums from './Albums';
-import Artists from './Artists';
-
-*/
 import { Link,Outlet } from "react-router-dom";
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { Box } from '@mui/material';
 
 
 
 function Library(props) {
-  return (
-    <div>
-      <h1 style={{color:"aquamarin"}}>Welcom To my Library</h1>
-      <nav>
-        <Link to="/">Welcome Page</Link>&nbsp;
-        <Link to="songs">Songs</Link>&nbsp;
-        <Link to="artists">Artists</Link>&nbsp;
-        <Link to="albums">Albums</Link>&nbsp;
-      </nav>
-      <div>
-        <Outlet/>
-      </div>
+  return (  
+    <div style={{ backgroundColor:"#C8AD7F", display:"flex",  flexDirection:"column", justifyContent: "center",   minHeight: "100dvh", overflow: "auto"}}>  
+     <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Stack direction="row"  gap={2}   flexWrap="wrap" sx={{ mt: 1}}  justifyContent="center"  >
+              <Button variant="contained" sx={{ backgroundColor: '#438D80' }} ><Link to="/">Home</Link></Button>
+              <Button variant="contained" sx={{ backgroundColor: '#438D80' }}><Link to="songs">Songs</Link></Button>
+              <Button variant="contained" sx={{ backgroundColor: '#438D80'  }} > <Link to="artists">Artists</Link></Button>
+              <Button variant="contained" sx={{ backgroundColor: '#438D80' }} ><Link to="albums">Albums</Link></Button>
+          </Stack> 
+      </Box>         
+      <Outlet style={{   minHeight: "90dvh", overflow: "auto"}} />      
     </div>
   )
 }

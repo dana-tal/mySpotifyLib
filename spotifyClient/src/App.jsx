@@ -15,12 +15,12 @@ function App() {
     useEffect(() => {
     const loginResp = new URLSearchParams(window.location.search).get('login');
     if (loginResp !== 'success') return;
-    navigate("/library");
+    navigate("/library/songs");
 
   }, []);
 
   return (
-    <div style={{ display:"flex" , flexDirection:"column", alignItems:"center"}}>
+    <div >
 
         <Routes>
               <Route path="/" element={ <Welcome /> } />
