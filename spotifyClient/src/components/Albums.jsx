@@ -1,41 +1,37 @@
 import { getAlbumsGroup} from '../utils/requests';
-import { useEffect, useState } from 'react';
+import { useState,useCallback } from 'react';
+import AlbumListItem from './AlbumListItem';
+import Loader from './tools/Loader';
+import ListContainer from './tools/ListContainer';
 
-function Albums(props) {
+const ALBUMS_PER_PAGE = import.meta.env.VITE_ALBUMS_PER_PAGE;
+
+function Albums() {
 
   const [albums, setAlbums] = useState([]);
-
   
- useEffect(() => {
-    const fetchAlbums = async () => {
+
+  const fetchAlbums = useCallback( async (pageNum) => {
       try 
-      {
-        const myAlbums = await getAlbumsGroup(50,0);
+      {           
+        const myAlbums = await getAlbumsGroup(ALBUMS_PER_PAGE,pageNum);
         setAlbums(myAlbums.items);
+        return ( {total: myAlbums.total} );
       } 
       catch (err) 
       {
         console.error('Error fetching data', err);
+         return ( {total:0} );
       }
-    };
+    },[]);
 
-    fetchAlbums();
-  }, [props.isLogged]);
+  return ( <ListContainer title="My Lovely Albums"  fetchFunc={fetchAlbums} perPage={ALBUMS_PER_PAGE}>
+            { albums.length >0 && albums.map( item => <AlbumListItem item={item}/>)}
+            { albums.length ===0 && 
+                  <Loader />
+              }
+  </ListContainer>);
 
-
-  return (
-    <div>
-        <h1 style={{ color:"blue"}}>Albums</h1>
-        <ul>
-            { albums.map ( item => {
-                
-                return <li key={item.album.id}> { item.album.name } - {item.album.artists[0].name}</li>
-                } ) } 
-        </ul>
-    </div>
-  )
 }
-
-
 
 export default Albums

@@ -1,4 +1,4 @@
-.songs-container
+.list-container
 {
     max-width:1400px;
     margin:40px auto 0 auto;
@@ -11,13 +11,13 @@
    min-height:60dvh; 
 }
 
-.song-list-item-container
+.list-item-container
 {
     display:flex;
     flex-direction:column;
     flex-basis:200px;
     height:200px;
-    background-color:#C8AD7F !important; /* #B1907F /*#E1D9D1*/;
+    background-color:#C8AD7F !important;
     border:1px solid #966F33 !important;
     margin-bottom:20px !important;
     padding:3px;
@@ -25,7 +25,7 @@
      border-radius: 10px;
 }
 
-.song-list-item-content
+.list-item-content
 {
     display:flex;
     flex-direction: column;
