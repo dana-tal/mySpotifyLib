@@ -25,8 +25,8 @@ function Albums() {
       }
     },[]);
 
-  return ( <ListContainer title="My Lovely Albums"  fetchFunc={fetchAlbums} perPage={ALBUMS_PER_PAGE}>
-            { albums.length >0 && albums.map( item => <AlbumListItem item={item}/>)}
+  return ( <ListContainer title="My Albums"  fetchFunc={fetchAlbums} perPage={ALBUMS_PER_PAGE}>
+            { albums.length >0 && albums.map( item => <AlbumListItem key={item.id}  item={item}/>)}
             { albums.length ===0 && 
                   <Loader />
               }

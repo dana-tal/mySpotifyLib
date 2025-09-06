@@ -82,7 +82,7 @@ const getAlbumsGroup = async (accessToken, limit, page)=>
     return albumsResponse;
 }
 
-const getArtistsList = async (accessToken, limit,after=null) =>
+const getArtistsList = async (accessToken, limit,after=null,before=null) =>
 {    
     const url = new URL(process.env.SPOTIFY_ARTISTS_ENTRY_POINT);
     url.searchParams.set("type", "artist");
@@ -90,6 +90,10 @@ const getArtistsList = async (accessToken, limit,after=null) =>
     if (after)
     {
       url.searchParams.set("after", after);
+    }
+    else if (before)
+    {
+       url.searchParams.set("before",before);
     }
    
     const artistsResponse = await axios.get(url, {

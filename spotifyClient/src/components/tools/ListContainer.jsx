@@ -13,7 +13,6 @@ function ListContainer({title,fetchFunc,perPage,children}) {
   }
 
   useEffect(() => {
-  console.log("inside useEffect");
   
   const loadData = async () => {
     const result = await fetchFunc(pageNum);

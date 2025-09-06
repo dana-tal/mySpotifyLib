@@ -11,7 +11,7 @@ function Songs() {
 
   const [tracks, setTracks] = useState([]);
   
-   const fetchSongs = useCallback( async (pageNum) => 
+  const fetchSongs = useCallback( async (pageNum) => 
    {
       try {
            
@@ -26,8 +26,8 @@ function Songs() {
     },[]);
 
 
-  return (<ListContainer title="My Library2 Songs"  fetchFunc={fetchSongs} perPage={SONGS_PER_PAGE}>
-         { tracks.length >0 && tracks.map( item => <SongListItem item={item}/>)}
+  return (<ListContainer title="My Songs"  fetchFunc={fetchSongs} perPage={SONGS_PER_PAGE}>
+         { tracks.length >0 && tracks.map( item => <SongListItem key={item.id}  item={item}/>)}
          { tracks.length ===0 && 
             <Loader />
          }
