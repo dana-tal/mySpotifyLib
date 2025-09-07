@@ -1,0 +1,30 @@
+.navbar-container 
+{
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-stack 
+{
+  display: flex;
+  margin-top: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-button 
+{
+  background-color: #438D80 !important; /* override MUI’s default */
+   color: white;
+  text-transform: none;
+}
+
+.navbar-button a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar-button.active {
+  background-color: #2e6359 !important; /* darker shade */
+  font-weight: bold;
+}

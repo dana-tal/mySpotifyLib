@@ -37,5 +37,6 @@
     text-decoration:bold;
     background-color:#d1bea8;
     font-size:medium;
-    border-radius:20px
+    border-radius:20px;
+    cursor:pointer;
 }

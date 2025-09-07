@@ -1,0 +1,16 @@
+
+.library-container
+{
+    background-color:#C8AD7F;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    min-height: 100dvh;
+    overflow: auto;
+}
+
+.outlet-style
+{
+    min-height: 90dvh;
+    overflow: auto
+}
