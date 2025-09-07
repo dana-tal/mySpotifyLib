@@ -1,0 +1,41 @@
+
+.welcome-container
+{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height: 100dvh;
+    color:#664c28;
+    background: linear-gradient(145deg, #faebd7,#C8AD7F ,#faebd7)
+}
+
+.login-container
+{
+    border:1px solid #664c28 ;
+    width: 100%;
+    max-width:300px;
+    text-align:center;
+    margin: 0 auto; 
+    padding-top:80px;
+    padding-bottom:80px;
+    background-color:#faebd7;
+    border-radius: 10px
+}
+
+@media (min-width: 768px) {
+    .login-container
+    {
+        max-width:400px
+    }
+}
+
+.login-button
+{
+    height:60px;
+    color:#664c28;
+    text-decoration:bold;
+    background-color:#d1bea8;
+    font-size:medium;
+    border-radius:20px
+}
