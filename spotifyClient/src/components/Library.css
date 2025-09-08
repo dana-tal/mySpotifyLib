@@ -1,7 +1,7 @@
 
 .library-container
 {
-    background-color: color(srgb 78.43% 67.84% 49.8%); /* #C8AD7F */
+    background-color:#C8AD7F;
     display:flex;
     flex-direction:column;
     justify-content:center;
