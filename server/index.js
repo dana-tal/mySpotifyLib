@@ -12,6 +12,7 @@ dotenv.config();
 
 import authRouter from './routers/authRouter.js';
 import contentRouter from './routers/contentRouter.js';
+import authController from './controllers/authController.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -71,6 +72,31 @@ app.use(session(sessionConfig));
   res.send("API is running");
 });
 app.use('/auth', authRouter);
+
+
+// Middleware runs for all /content routes
+app.use('/content', async (req, res, next) => {
+  const expiresAt = req.session.access_token_expires_at;
+
+  if (!req.session.access_token || !expiresAt || Date.now() >= expiresAt)
+  {
+        try 
+        {
+          // refreshAccessToken now behaves as middleware
+          await authController.refreshAccessToken(req, res, next);
+        } 
+        catch (err)
+        {
+          return res.status(500).json({ error: 'Failed to refresh access token' });
+        }
+  } 
+  else 
+  {
+    next();
+  }
+});
+
+
 
 app.use('/content', contentRouter);
 

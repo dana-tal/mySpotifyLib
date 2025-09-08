@@ -43,11 +43,7 @@ const getTempCode = (req,res)=>{
 
 const setAccessToken = async (req,res) =>{
 
-      // console.log("Inside setAccessToken");
     const code = req.query.code; // read the temporary code returned from spotify 
-
-      //console.log("code="+code);
-  
 
       try {
         //        console.log("calling spotifyService.getAccessToken");
@@ -62,8 +58,12 @@ const setAccessToken = async (req,res) =>{
                   const userId = userResponse.data.id;
                   
                 //  console.log("userId: "+userId);
+
+                console.log("token expires in :"+tokenResponse.data.expires_in);
                 req.session.userId = userId;
                 req.session.access_token = access_token;
+                 req.session.access_token_expires_at = Date.now() + tokenResponse.data.expires_in * 1000; // remember when this access token expires 
+               // req.session.access_token_expires_at = Date.now() + 5 * 1000; // expires in 5 seconds, for testing refresh mechanism 
                 req.session.refresh_token = refresh_token;
 
                  // Force session to save before redirecting
@@ -88,8 +88,12 @@ const setAccessToken = async (req,res) =>{
 };
 
 
-const refreshAccessToken = async (req, res) => {
+const refreshAccessToken = async (req, res,next) => {
   const refreshToken = req.session.refresh_token;
+
+//  console.log("Entering refreshAccessToke: ");
+ // console.log("refreshToken="+refreshToken);
+
   if (!refreshToken) 
   {
     return res.status(401).json({ error: 'No refresh token in session' });
@@ -99,11 +103,19 @@ const refreshAccessToken = async (req, res) => {
   {
         const response = await spotifyService.refetchAccessToken(refreshToken);
         const new_access_token = response.data.access_token;
+
+      //  console.log('Access token expired. Refreshing...');
+       // console.log('New access token:', new_access_token);
+
         req.session.access_token = new_access_token;
+        req.session.access_token_expires_at = Date.now() + response.data.expires_in * 1000; // update the expiration time of the access token
+
         req.session.save(err => {
                                     if (err) 
                                       console.error('Session save error:', err);
-                                    res.json({ access_token: new_access_token });
+                                    if (next) next();  // call next() if used as middleware, next is undefined when refreshAccessToken is called as a normal endpoint.
+                                    else res.json({ access_token: new_access_token }); // keep existing API response
+                                    //res.json({ access_token: new_access_token });
                                 });
        
   } 

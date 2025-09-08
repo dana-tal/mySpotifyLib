@@ -38,7 +38,7 @@ const refetchAccessToken = (refreshToken) =>{
 
     const body = new URLSearchParams({
             grant_type: 'refresh_token',
-            refreshToken,
+            refresh_token: refreshToken,
         });
 
     return axios.post(process.env.SPOTIFY_TOKEN_API_URL, body, {

@@ -50,11 +50,11 @@ const getAlbumsPage = async (req,res) =>{
 const getArtistsPage = async (req,res)=>{
     try
     {
-        console.log("getArtistsPage");
+       // console.log("getArtistsPage");
         let { after = null, before=null,limit = 50 } = req.query;
         limit = parseInt(limit);
         const resp = await spotifyService.getArtistsList(req.session.access_token,limit,after,before);
-        console.log(resp.data);
+       // console.log(resp.data);
         res.json (resp.data);   
 
     }
