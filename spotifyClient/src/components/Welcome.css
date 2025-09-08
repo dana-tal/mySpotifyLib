@@ -6,20 +6,26 @@
     align-items:center;
     justify-content:center;
     height: 100dvh;
-    color:#664c28;
-    background: linear-gradient(145deg, #faebd7,#C8AD7F ,#faebd7)
+    color: color(srgb 40% 29.8% 15.69%); /* #664c28; */
+    background: linear-gradient(
+        145deg,
+        color(srgb 0.9804 0.9216 0.8431),
+        color(srgb 0.7843 0.6784 0.4980),
+        color(srgb 0.9804 0.9216 0.8431)
+        );
+    /* background: linear-gradient(145deg, #faebd7,#C8AD7F ,#faebd7) */
 }
 
 .login-container
 {
-    border:1px solid #664c28 ;
+    border:1px solid color(srgb 40% 29.8% 15.69%);/* #664c28 ; */
     width: 100%;
     max-width:300px;
     text-align:center;
     margin: 0 auto; 
     padding-top:80px;
     padding-bottom:80px;
-    background-color:#faebd7;
+    background-color:color(srgb 98.04% 92.16% 84.31%); /* #faebd7; */
     border-radius: 10px
 }
 
@@ -33,9 +39,9 @@
 .login-button
 {
     height:60px;
-    color:#664c28;
+    color:color(srgb 40% 29.8% 15.69%); /* #664c28 ;*/
     text-decoration:bold;
-    background-color:#d1bea8;
+    background-color:color(srgb 81.96% 74.51% 65.88%);/* #d1bea8; */
     font-size:medium;
     border-radius:20px;
     cursor:pointer;
