@@ -59,7 +59,6 @@ const setAccessToken = async (req,res) =>{
                   
                 //  console.log("userId: "+userId);
 
-                console.log("token expires in :"+tokenResponse.data.expires_in);
                 req.session.userId = userId;
                 req.session.access_token = access_token;
                  req.session.access_token_expires_at = Date.now() + tokenResponse.data.expires_in * 1000; // remember when this access token expires 

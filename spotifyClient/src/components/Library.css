@@ -11,6 +11,17 @@
 
 .outlet-style
 {
-    min-height: 90dvh;
-    overflow: auto
+    min-height: 85dvh;
+    overflow: auto;
+    background-color: #E9E4D4;
+    margin:0 auto;
+    min-width:80%;
+}
+
+
+@media (max-height: 850px) {
+   .outlet-style
+   {
+        margin-bottom:20px;
+   }
 }

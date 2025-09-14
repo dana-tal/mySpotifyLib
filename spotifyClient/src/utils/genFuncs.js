@@ -22,4 +22,9 @@ const shortenString = (str,maxChars=28) =>{
     return (retStr);
 }
 
-export { shortenString }
+const isMobile = () => 
+{
+  return window.matchMedia("(max-width: 767px)").matches;
+}
+
+export { shortenString, isMobile }

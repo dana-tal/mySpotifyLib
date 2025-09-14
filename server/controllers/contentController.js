@@ -28,6 +28,22 @@ const getSongsPage = async (req,res) =>{
     }
 }
 
+const getSingleSongInfo = async (req,res) =>{
+
+    try
+    {
+        const songId = req.params.songId;
+
+        const resp = await spotifyService.getSingleSong(req.session.access_token,songId);
+        res.json( resp.data);
+    }
+    catch (err) 
+    {
+        errLogger.error(`getSingleSongInfo failed: ${err.message}`, { stack: err.stack });                
+        return res.status(500).json({ error: err.message });
+    }
+}
+
 
 const getAlbumsPage = async (req,res) =>{
     try
@@ -65,4 +81,4 @@ const getArtistsPage = async (req,res)=>{
     }
 }
 
-export default { getSongsPage, getAlbumsPage, getArtistsPage };
+export default { getSongsPage, getAlbumsPage, getArtistsPage, getSingleSongInfo};

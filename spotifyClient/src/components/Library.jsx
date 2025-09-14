@@ -6,7 +6,9 @@ function Library() {
   return (  
     <div className="library-container">  
        <NavBar />     
-      <Outlet className="outlet-style"/>      
+       <div className="outlet-style">
+          <Outlet />      
+        </div>
     </div>
   )
 }

@@ -67,6 +67,20 @@ const getSongsGroup = async (accessToken, limit,page) =>{
 
 }
 
+
+
+const getSingleSong = async (accessToken,songId)=>
+{
+
+    const url = process.env.SPOTIFY_SINGLE_SONG_ENTRY_POINT+'/'+songId;
+    const songResponse = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+    return songResponse;
+}
+
 const getAlbumsGroup = async (accessToken, limit, page)=>
 {
     const offset = page * limit;
@@ -106,4 +120,4 @@ const getArtistsList = async (accessToken, limit,after=null,before=null) =>
 }
 
 
-export default { fetchAccessToken, fetchUserId, refetchAccessToken , getSongsGroup, getAlbumsGroup , getArtistsList }
+export default { fetchAccessToken, fetchUserId, refetchAccessToken , getSongsGroup, getAlbumsGroup , getArtistsList, getSingleSong }

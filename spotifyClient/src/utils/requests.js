@@ -9,6 +9,19 @@ const getSongsGroup = async (limit,page) =>{
     return resp.data; 
 }
 
+const getSingleSong = async (songId) =>{
+
+    console.log("songId="+songId);
+    const url = DOMAIN+import.meta.env.VITE_SONGS_ENTRY_POINT+songId;
+    console.log("url="+url);
+     const resp = await axios.get(url);
+     console.log("resp:");
+     console.log(resp);
+
+    return resp.data; 
+}
+
+
 const getAlbumsGroup = async (limit, page)=>{
 
     const url = DOMAIN+import.meta.env.VITE_ALBUMS_ENTRY_POINT+'?limit='+limit+'&page='+page;
@@ -31,5 +44,5 @@ const getArtistsList = async (limit,after=null,before=null)=>{
     return resp.data; 
 }
 
-export { getSongsGroup, getAlbumsGroup, getArtistsList };
+export { getSongsGroup, getAlbumsGroup, getArtistsList ,getSingleSong};
 

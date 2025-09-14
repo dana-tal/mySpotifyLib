@@ -9,6 +9,7 @@
     justify-content:space-around;
     flex-wrap:wrap;
    min-height:60dvh; 
+   gap:16px;
 }
 
 .list-item-container
@@ -25,8 +26,19 @@
      border-radius: 10px;
 }
 
+
+.list-container a {
+  flex: 0 0 200px; /* fixed width */
+}
+
 .list-item-content
 {
     display:flex;
     flex-direction: column;
+}
+
+.list-item-link
+{
+    text-decoration:none;
+   /* display:block; */
 }

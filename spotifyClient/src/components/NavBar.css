@@ -7,9 +7,10 @@
 .navbar-stack 
 {
   display: flex;
-  margin-top: 8px;
+  margin-top: 20px; 
   justify-content: center;
   align-items: center;
+  margin-bottom:20px;
 }
 
 .navbar-button 
