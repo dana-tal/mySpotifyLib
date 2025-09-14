@@ -3,6 +3,9 @@ import { useState,useCallback } from 'react';
 import ArtistListItem from './ArtistListItem';
 import Loader from './tools/Loader';
 import CursorListContainer from './tools/CursorListContainer';
+import {Link} from 'react-router-dom';
+import "./List.css";
+
 
 const ARTISTS_PER_PAGE =  import.meta.env.VITE_ARTISTS_PER_PAGE;
 
@@ -30,7 +33,7 @@ function Artists(props) {
 
 
   return (<CursorListContainer title="My Followed Artists"  fetchFunc={fetchArtists} >
-         { artists.length >0 && artists.map( item => <ArtistListItem key={item.id}  item={item}/>)}
+         { artists.length >0 && artists.map( item =>  <Link key={item.id}  to={`${item.id}`} className="list-item-link"><ArtistListItem   item={item}/></Link>)}
          { artists.length ===0 && 
             <Loader />
          }

@@ -48,7 +48,6 @@ const getSingleAlbumInfo = async (req,res) =>{
     try
     {
         const albumId = req.params.albumId;
-        console.log("getSingleAlbumInfo, albumId="+albumId);
         const resp = await spotifyService.getSingleAlbum(req.session.access_token,albumId);
         res.json( resp.data);
     }

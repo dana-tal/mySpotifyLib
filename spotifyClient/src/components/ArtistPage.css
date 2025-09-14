@@ -1,0 +1,86 @@
+
+
+.frame
+{
+    min-height: 80dvh;  
+    width:80%;
+    grid-auto-rows: 150px;
+    margin:auto;
+    margin-top:20px;
+}
+.grid-table {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Two equal columns */
+      margin:20px auto;
+      align-items: stretch;  
+       
+    }
+    .cell {
+      padding: 8px;
+       display: flex;             /* flex container to center content */
+       align-items: center;       /* vertical centering inside the cell */
+        justify-content: center;   /* horizontal centering */
+        box-sizing: border-box;    /* include padding in width/height */
+    }
+  
+   /* Striping rows */
+.cell:nth-child(4n-3),
+.cell:nth-child(4n-2) 
+{
+  background-color:#D1BEA8;/*linear-gradient(145deg,#C6BA8B, white);*/  /* odd row */
+}
+
+.cell:nth-child(4n-1),
+.cell:nth-child(4n) {
+  background-color: #F8F6F0; /* even row */
+}
+
+
+.cell ul
+{
+    list-style-type: none;
+    padding-inline-start: 0px;
+}
+
+.artist-name
+{
+    color:#513B1C;
+    font-size: 45px;
+}
+    
+
+
+@media (max-width: 767px) {
+   .artist-name
+   {
+      font-size: unset;
+   }
+   
+    
+  
+}
+
+@media (min-width:767px) and  (max-width: 911px) {
+   .artist-name
+   {
+      font-size: 20px;
+   }
+  
+}
+
+@media (min-width:912px) and  (max-width: 1023px) {
+   .artist-name
+   {
+      font-size: 28px;
+   }
+    
+}
+
+
+@media (min-width:1024px) and (max-width:1100px) {
+   .artist-name
+   {
+      font-size: 35px;
+   }
+   
+}

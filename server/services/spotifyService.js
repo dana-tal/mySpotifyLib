@@ -83,9 +83,7 @@ const getSingleSong = async (accessToken,songId)=>
 
 const getSingleAlbum = async (accessToken, albumId)=>
 {
-   console.log("in service getSingleAlbum , albumId="+albumId);
     const url = process.env.SPOTIFY_SINGLE_ALBUM_ENTRY_POINT+'/'+albumId;
-    console.log("url="+url);
      const albumResponse = await axios.get(url, {
           headers: {
             Authorization: `Bearer ${accessToken}`
