@@ -81,6 +81,30 @@ const getSingleSong = async (accessToken,songId)=>
     return songResponse;
 }
 
+const getSingleAlbum = async (accessToken, albumId)=>
+{
+   console.log("in service getSingleAlbum , albumId="+albumId);
+    const url = process.env.SPOTIFY_SINGLE_ALBUM_ENTRY_POINT+'/'+albumId;
+    console.log("url="+url);
+     const albumResponse = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+    return albumResponse;   
+}
+
+const getSingleArtist = async (accessToken, artistId) =>
+{
+  const url = process.env.SPOTIFY_SINGLE_ARTIST_ENTRY_POINT+'/'+artistId;
+   const artistResponse = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+    return artistResponse;       
+}
+
 const getAlbumsGroup = async (accessToken, limit, page)=>
 {
     const offset = page * limit;
@@ -120,4 +144,4 @@ const getArtistsList = async (accessToken, limit,after=null,before=null) =>
 }
 
 
-export default { fetchAccessToken, fetchUserId, refetchAccessToken , getSongsGroup, getAlbumsGroup , getArtistsList, getSingleSong }
+export default { fetchAccessToken, fetchUserId, refetchAccessToken , getSongsGroup, getAlbumsGroup , getArtistsList, getSingleSong, getSingleAlbum, getSingleArtist }

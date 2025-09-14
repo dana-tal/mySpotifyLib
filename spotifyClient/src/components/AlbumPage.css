@@ -42,24 +42,23 @@
     padding-inline-start: 0px;
 }
 
-.song-name
+.album-name
 {
     color:#513B1C;
     font-size: 45px;
 }
 
-.song-album-name
+.artists
 {
     color:#C9AE5D;
-    font-size:40px;
-}
-
-.song-artists
-{
-    color:"#513B1C";
      font-size:40px;
 }
-    
+  
+.tracks
+{
+      color:#513B1C;
+      font-size: 38px;
+}
 
 
 @media (max-width: 767px) {
@@ -68,12 +67,17 @@
       font-size: unset;
    }
    
-    .song-album-name
+    .album-name
     {
         font-size:unset;
     }
     
-    .song-artists
+    .artists
+    {
+        font-size:unset;
+    }
+
+    .tracks
     {
         font-size:unset;
     }
@@ -85,14 +89,19 @@
    {
       font-size: 20px;
    }
-    .song-album-name
+    .album-name
     {
         font-size:18px;
     }
 
-     .song-artists
+     .artists
     {
         font-size:18px;
+    }
+
+    .tracks
+    {
+        font-size:16px;
     }
 }
 
@@ -101,13 +110,17 @@
    {
       font-size: 28px;
    }
-    .song-album-name
+    .album-name
     {
         font-size:24px;
     }
-      .song-artists
+      .artists
     {
         font-size:24px;
+    }
+    .tracks 
+    {
+        font-size:22px;
     }
 }
 
@@ -117,12 +130,16 @@
    {
       font-size: 35px;
    }
-    .song-album-name
+    .album-name
     {
         font-size:31px;
     }
-      .song-artists
+      .artists
     {
         font-size:31px;
+    }
+    .tracks
+    {
+        font-size:29px;
     }
 }

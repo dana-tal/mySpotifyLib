@@ -7,6 +7,8 @@ const router = express.Router();
 router.get('/songs',contentController.getSongsPage);
 router.get('/songs/:songId', contentController.getSingleSongInfo);
 router.get('/albums', contentController.getAlbumsPage);
+router.get('/albums/:albumId',contentController.getSingleAlbumInfo);
 router.get('/artists',contentController.getArtistsPage);
+router.get('/artists/:artistId',contentController.getSingleArtistInfo);
 
 export default router;

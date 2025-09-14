@@ -44,6 +44,35 @@ const getSingleSongInfo = async (req,res) =>{
     }
 }
 
+const getSingleAlbumInfo = async (req,res) =>{
+    try
+    {
+        const albumId = req.params.albumId;
+        console.log("getSingleAlbumInfo, albumId="+albumId);
+        const resp = await spotifyService.getSingleAlbum(req.session.access_token,albumId);
+        res.json( resp.data);
+    }
+    catch(err)
+    {
+         errLogger.error(`getSingleAlbumInfo failed: ${err.message}`, { stack: err.stack });                
+        return res.status(500).json({ error: err.message });
+    }
+}
+
+const getSingleArtistInfo = async (req,res) =>{
+
+    try
+    {
+        const artistId = req.params.artistId;
+        const resp = await spotifyService.getSingleArtist(req.session.access_token,artistId);
+        res.json( resp.data);
+    }
+    catch(err)
+    {
+         errLogger.error(`getSingleArtistInfo failed: ${err.message}`, { stack: err.stack });                
+        return res.status(500).json({ error: err.message });
+    }
+}
 
 const getAlbumsPage = async (req,res) =>{
     try
@@ -81,4 +110,4 @@ const getArtistsPage = async (req,res)=>{
     }
 }
 
-export default { getSongsPage, getAlbumsPage, getArtistsPage, getSingleSongInfo};
+export default { getSongsPage, getAlbumsPage, getArtistsPage, getSingleSongInfo,getSingleAlbumInfo,getSingleArtistInfo};

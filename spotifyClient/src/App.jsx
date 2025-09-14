@@ -8,6 +8,7 @@ import Songs from './components/Songs';
 import SongPage from './components/SongPage';
 import Albums from './components/Albums';
 import Artists from './components/Artists';
+import AlbumPage from './components/AlbumPage';
 
 function App() {
   
@@ -29,6 +30,7 @@ function App() {
                 <Route path="songs" element={<Songs/>} />
                 <Route path="songs/:id" element={<SongPage/>} />   
                 <Route path="albums" element={<Albums/>} />
+                <Route path="albums/:id" element={<AlbumPage/>} />
                 <Route path="artists" element={<Artists/>} />               
               </Route>
         </Routes>

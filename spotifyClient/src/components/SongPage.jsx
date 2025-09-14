@@ -49,12 +49,12 @@ function SongPage() {
               { /* <div className="cell">1</div><div className="cell">2</div> */}
                 <div className="cell" ><img src={img_obj.url} alt={songInfo.album.name} /></div>
                   <div className="cell" ><span className="song-name">{songInfo.name}</span></div>
-                  <div className="cell"><span className="album-name">Album Name: </span></div>
-                  <div className="cell"><span className="album-name">{songInfo.album.name}</span></div>
-                  <div className="cell"><span className="artists">Artists:</span></div>
+                  <div className="cell"><span className="song-album-name">Album Name: </span></div>
+                  <div className="cell"><span className="song-album-name">{songInfo.album.name}</span></div>
+                  <div className="cell"><span className="song-artists">Artists:</span></div>
                   <div className="cell">
                         <ul>
-                            { songInfo.artists.map ( (artist) =><li key={artist.id}><span className="artists">{artist.name}</span></li> )}
+                            { songInfo.artists.map ( (artist) =><li key={artist.id}><span className="song-artists">{artist.name}</span></li> )}
                           </ul>
                   </div>
               
