@@ -2,6 +2,7 @@
 import errLogger from '../utils/errorLogger.js';
 import infoLogger from '../utils/infoLogger.js';
 import spotifyService from '../services/spotifyService.js';
+import youTubeService from '../services/youTubeService.js';
 
 
 import dotenv from 'dotenv';
@@ -35,6 +36,13 @@ const getSingleSongInfo = async (req,res) =>{
         const songId = req.params.songId;
 
         const resp = await spotifyService.getSingleSong(req.session.access_token,songId);
+        const videoId = await youTubeService.getYouTubeVideoId(resp.data.artists[0].name, resp.data.name);       
+        console.log("videoId: "+videoId);
+        resp.data.youTubeVideoId = videoId;
+
+      // console.log("resp.data=");
+       // console.log(resp.data);
+
         res.json( resp.data);
     }
     catch (err) 

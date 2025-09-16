@@ -48,7 +48,7 @@ function SongPage() {
             <div className="grid-table">
             
                 <div className="cell" ><img src={img_obj.url} alt={artistInfo.name} /></div>
-                  <div className="cell" ><span className="artist-name">{artistInfo.name}</span></div>
+                  <div className="cell" ><span className="artist-name">Artist: {artistInfo.name}</span></div>
 
                   <div className="cell"><span>Followers Total: </span></div>
                   <div className="cell"><span >{artistInfo.followers.total}</span></div>

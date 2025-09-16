@@ -49,11 +49,11 @@ function AlbumPage() {
             <div className="grid-table">
              
                 <div className="cell" ><img src={img_obj.url} alt={albumInfo.name} /></div>
-                  <div className="cell"><span className="album-name">{albumInfo.name}</span></div>
+                  <div className="cell"><span className="album-name">Album: {albumInfo.name}</span></div>
                   <div className="cell"><span className="artists">Artists:</span></div>
                   <div className="cell">
                         <ul>
-                            { albumInfo.artists.map ( (artist) =><li key={artist.id}><span className="artists">{artist.name}</span></li> )}
+                            { albumInfo.artists.map ( (artist) =><li key={artist.id}><Link to={`/library/artists/${artist.id}`}><span className="artists">{artist.name}</span></Link></li> )}
                           </ul>
                   </div>
                   <div className="cell"><span className="tracks">Tracks: [{albumInfo.tracks.total}]</span></div>
