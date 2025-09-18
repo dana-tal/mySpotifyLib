@@ -23,6 +23,49 @@ const fetchAccessToken =  (spotifyCode) =>{
 }
 
 
+const fetchSDKToken = (refresh_token) =>{
+
+  const body = new URLSearchParams({
+      grant_type: "refresh_token",
+      refresh_token: refresh_token,
+      client_id: process.env.SPOTIFY_CLIENT_ID,
+      client_secret: process.env.SPOTIFY_CLIENT_SECRET,
+    });
+
+
+    return axios.post("https://accounts.spotify.com/api/token", body, {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    });
+
+}
+
+
+/*
+app.get("/spotify/token", async (req, res) => {
+  if (!req.session.refresh_token) {
+    return res.status(401).json({ error: "Not logged in" });
+  }
+
+  try {
+    const response = await axios.post("https://accounts.spotify.com/api/token", new URLSearchParams({
+      grant_type: "refresh_token",
+      refresh_token: req.session.refresh_token,
+      client_id: process.env.SPOTIFY_CLIENT_ID,
+      client_secret: process.env.SPOTIFY_CLIENT_SECRET,
+    }), {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    });
+
+    res.json({ access_token: response.data.access_token });
+  } catch (err) {
+    console.error(err.response?.data || err.message);
+    res.status(500).json({ error: "Failed to refresh access token" });
+  }
+});
+*/
+
+
+
 const fetchUserId = (access_token) =>{
 
         return  axios.get( process.env.SPOTIFY_USER_API_URL, {
@@ -32,6 +75,8 @@ const fetchUserId = (access_token) =>{
                   });
 
 }
+
+
 
 
 const refetchAccessToken = (refreshToken) =>{
@@ -142,4 +187,15 @@ const getArtistsList = async (accessToken, limit,after=null,before=null) =>
 }
 
 
-export default { fetchAccessToken, fetchUserId, refetchAccessToken , getSongsGroup, getAlbumsGroup , getArtistsList, getSingleSong, getSingleAlbum, getSingleArtist }
+export default { 
+  fetchAccessToken,
+  fetchUserId,
+  refetchAccessToken ,
+  fetchSDKToken,
+  getSongsGroup,
+  getAlbumsGroup ,
+  getArtistsList,
+  getSingleSong,
+  getSingleAlbum,
+  getSingleArtist 
+}

@@ -25,15 +25,21 @@ const getTempCode = (req,res)=>{
       // console.log("redirect_uri:");
       // console.log(redirect_uri)
 
-       const scope = 'user-library-read user-read-email user-follow-read'; // this is how to ask spotify to give access permission to the user library
-
-        const authUrl = process.env.SPOTIFY_AUTHORIZE_URL+'?' +
-        new URLSearchParams({
-        response_type: 'code',
+       const scope = 'user-library-read user-read-email user-follow-read streaming user-modify-playback-state user-read-playback-state'; // this is how to ask spotify to give access permission to the user library
+    
+            const authUrl =
+      process.env.SPOTIFY_AUTHORIZE_URL +
+      "?" +
+      new URLSearchParams({
+        response_type: "code",
         client_id,
         scope,
         redirect_uri,
-        });  
+       /* show_dialog: "true",   // 👈 force re-consent */
+      });
+
+
+
         //console.log("authUrl:");
         //console.log (authUrl);
         
@@ -48,6 +54,8 @@ const setAccessToken = async (req,res) =>{
       try {
         //        console.log("calling spotifyService.getAccessToken");
                 const tokenResponse = await spotifyService.fetchAccessToken(code);
+
+                
                 const access_token = tokenResponse.data.access_token;
                 const refresh_token = tokenResponse.data.refresh_token;
           //      console.log("access_token:"+access_token);
@@ -142,6 +150,22 @@ const getAccessToken = (req,res)=>{
 }
 
 
+const getSDKToken = async (req, res) => {
+  try {
+    if (!req.session.refresh_token) {
+      return res.status(401).json({ error: "No refresh token in session" });
+    }
+
+    const resp = await spotifyService.fetchSDKToken(req.session.refresh_token);
+    console.log("SDK Token scopes:", resp.data.scope);
+    const access_token = resp.data.access_token;
+
+    res.json({ access_token });
+  } catch (err) {
+    console.error("Error fetching SDK token:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+};
 
 
-export default { getTempCode ,setAccessToken, refreshAccessToken, getAccessToken}
+export default { getTempCode ,setAccessToken, refreshAccessToken, getAccessToken, getSDKToken}

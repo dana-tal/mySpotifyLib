@@ -37,9 +37,18 @@ const getSingleSongInfo = async (req,res) =>{
 
         const resp = await spotifyService.getSingleSong(req.session.access_token,songId);
         const videoId = await youTubeService.getYouTubeVideoId(resp.data.artists[0].name, resp.data.name);       
-        console.log("videoId: "+videoId);
+       // console.log("videoId: "+videoId);
         resp.data.youTubeVideoId = videoId;
 
+       // resp.data.accessToken = req.session.access_token;
+
+        const resp2 = await spotifyService.fetchSDKToken(req.session.refresh_token);
+        resp.data.accessToken = resp2.data.access_token;
+
+       console.log("song access token:");
+        console.log(resp.data.accessToken);
+
+        // response.data.access_token 
       // console.log("resp.data=");
        // console.log(resp.data);
 

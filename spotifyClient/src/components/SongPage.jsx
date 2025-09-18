@@ -7,6 +7,7 @@ import Loader from './tools/Loader';
 import "./SongPage.css";
 import {Link} from 'react-router-dom';
 import YouTubePlayer from './tools/YouTubePlayer';
+import SpotifyPlayer from './tools/SpotifyPlayer';
 
 function SongPage() {
 
@@ -59,16 +60,29 @@ function SongPage() {
                           </ul>
                   </div>
                   <div className="cell">
+                    Play on Spotify
+                  </div>
+                  
+                  <div className="cell">
+                      {songInfo.accessToken && (
+                        <SpotifyPlayer
+                          trackUri={`spotify:track:${paramsObj.id}`}
+                          token={songInfo.accessToken}
+                        />
+                      )}
+                    </div>
+
+
+                { /* <div className="cell">  token={songInfo.accessToken}
                      YouTube
                   </div>
                   <div className="cell">
-                     { /*<a href={`https://www.youtube.com/watch?v=${songInfo.youTubeVideoId}`} target="_blank" rel="noopener noreferrer" >Watch on YouTube </a> */}
+                   
                      <YouTubePlayer videoId={songInfo.youTubeVideoId} />
-                  </div>
-              
+                  </div> */}
+                   { /*<a href={`https://www.youtube.com/watch?v=${songInfo.youTubeVideoId}`} target="_blank" rel="noopener noreferrer" >Watch on YouTube </a> */}
             </div>
-             { /* <YouTubePlayer videoId={songInfo.youTubeVideoId} /> */ }
-
+            
            
          
            </div>      
