@@ -1,7 +1,7 @@
 import Welcome from './components/Welcome';
 import Library from './components/Library';
 import {Route,Routes} from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Songs from './components/Songs';
@@ -14,18 +14,28 @@ import ArtistPage from './components/ArtistPage';
 function App() {
   
   const navigate = useNavigate();
+  const [notRegistered, setNotRegistered] = useState(false);
   
     useEffect(() => {
     const loginResp = new URLSearchParams(window.location.search).get('login');
-    if (loginResp !== 'success') return;
-    navigate("/library/songs");
+    if ( loginResp === 'not_registered')
+    {
+        setNotRegistered(true);
+        console.log("User Not Registered");
+    }
+   else if ( loginResp ==='success')
+   {
+        navigate("/library/songs");
+   }
+    // if (loginResp !== 'success') return;
+   
 
   }, []);
 
   return (
     <div >
-
-        <Routes>
+         { notRegistered && <span style={{ color:'red'}}>Spotify account not found. Please log in with a valid Spotify account. </span>} 
+         { !notRegistered && <Routes>
               <Route path="/" element={ <Welcome /> } />
               <Route path="/library" element={<Library/>} >
                 <Route path="songs" element={<Songs/>} />
@@ -35,7 +45,7 @@ function App() {
                 <Route path="artists" element={<Artists/>} />  
                 <Route path="artists/:id" element={<ArtistPage/>} />             
               </Route>
-        </Routes>
+        </Routes> }
     </div>
   )
 }

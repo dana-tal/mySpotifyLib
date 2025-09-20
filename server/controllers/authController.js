@@ -25,7 +25,7 @@ const getTempCode = (req,res)=>{
       // console.log("redirect_uri:");
       // console.log(redirect_uri)
 
-       const scope = 'user-library-read user-read-email user-follow-read streaming user-modify-playback-state user-read-playback-state'; // this is how to ask spotify to give access permission to the user library
+       const scope = 'user-library-read user-read-email user-read-private user-follow-read streaming user-modify-playback-state user-read-playback-state'; // this is how to ask spotify to give access permission to the user library
     
             const authUrl =
       process.env.SPOTIFY_AUTHORIZE_URL +
@@ -35,7 +35,7 @@ const getTempCode = (req,res)=>{
         client_id,
         scope,
         redirect_uri,
-       /* show_dialog: "true",   // 👈 force re-consent */
+       show_dialog: "true",   // 👈 force re-consent */
       });
 
 
@@ -58,14 +58,16 @@ const setAccessToken = async (req,res) =>{
                 
                 const access_token = tokenResponse.data.access_token;
                 const refresh_token = tokenResponse.data.refresh_token;
-          //      console.log("access_token:"+access_token);
+             //  console.log("setAccessToken, access_token:"+access_token);
             //    console.log("refresh_token:"+refresh_token);
 
               //    console.log("calling spotifyService.fetchUserId");
                   const userResponse = await spotifyService.fetchUserId(access_token);
+                 // console.log("setAccessToken, userResponse: ");
+                //  console.log("Spotify user data:", userResponse.data);
                   const userId = userResponse.data.id;
                   
-                //  console.log("userId: "+userId);
+                 console.log("userId: "+userId);
 
                 req.session.userId = userId;
                 req.session.access_token = access_token;
@@ -89,8 +91,19 @@ const setAccessToken = async (req,res) =>{
             } 
             catch (err) 
             {
-                 errLogger.error(`getAccessToken failed: ${err.message}`, { stack: err.stack });
-                return res.status(500).json(err);                 
+                 if (err.response?.status === 403) 
+                  {
+                      console.error("Spotify user not registered:", err.response.data);
+                       res.redirect(`${process.env.CLIENT_SIDE_URL}?login=not_registered`);     
+                     // return res.status(400).json({ 
+                      //  error: "Spotify account not found. Please log in with a valid Spotify account." 
+                      //});
+                  } 
+                  else 
+                  {
+                      //errLogger.error(`setAccessToken failed: ${err.message}`, { stack: err.stack });
+                      return res.status(500).json({error: err.response?.data || err.message});                 
+                   }
             }
 };
 
