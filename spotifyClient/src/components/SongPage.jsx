@@ -1,7 +1,8 @@
 import { useParams} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import { getSingleSong} from '../utils/requests';
-import { isMobile } from '../utils/genFuncs';
+import { isMobile,shortenString } from '../utils/genFuncs';
+import MouseHoverPopover from './tools/MouseHoverPopover';
 
 import Loader from './tools/Loader';
 import "./SongPage.css";
@@ -42,25 +43,28 @@ function SongPage() {
      console.log("is mobile:");
      console.log(is_mobile);
 
-      const img_obj =is_mobile ?  songInfo.album.images[2]:songInfo.album.images[1]; 
+     // const img_obj =is_mobile ?  songInfo.album.images[2]:songInfo.album.images[1]; 
+     const img_obj = songInfo.album.images[1]; 
+    //  console.log("images");
+    //  console.log(songInfo.album.images );
 
   return (
 
     <>        
-           <div className="frame">
-            <div className="grid-table">
+           <div className="song-frame ">
+            <div > {/*<!-- className="song-grid-table" --> */}
                 <div className="cell" ><img src={img_obj.url} alt={songInfo.album.name} /></div>
-                  <div className="cell" ><span className="song-name">Song: {songInfo.name}</span></div>
-                  <div className="cell"><span className="song-album-name">Album Name: </span></div>
-                  <div className="cell"><Link to={`/library/albums/${songInfo.album.id}`}><span className="song-album-name">{songInfo.album.name}</span></Link></div>
-                  <div className="cell"><span className="song-artists">Artists:</span></div>
+                  <div className="cell" ><MouseHoverPopover hoverText={songInfo.name}><span className="song-font">Song:</span><span className="song-name song-font"> {shortenString(songInfo.name,21) }</span></MouseHoverPopover></div>
+                  <div className="cell"><span className="song-album-name song-font">Album Name: </span></div>
+                  <div className="cell"><Link to={`/library/albums/${songInfo.album.id}`}><MouseHoverPopover hoverText={songInfo.album.name}><span className="song-album-name song-font">{shortenString(songInfo.album.name,21)}</span></MouseHoverPopover></Link></div>
+                  <div className="cell"><span className="song-label song-font">Artists:</span></div>
                   <div className="cell">
                         <ul>
-                            { songInfo.artists.map ( (artist) =><li key={artist.id}><Link to={`/library/artists/${artist.id}`} ><span className="song-artists">{artist.name}</span></Link></li> )}
+                            { songInfo.artists.map ( (artist) =><li key={artist.id}><Link to={`/library/artists/${artist.id}`} ><MouseHoverPopover hoverText={artist.name}><span className="song-artists song-font">{shortenString(artist.name,21) }</span></MouseHoverPopover></Link></li> )}
                           </ul>
                   </div>
                   <div className="cell">
-                    Play on Spotify
+                    <span className="song-font">Play on Spotify:</span>
                   </div>
                   
                   <div className="cell">

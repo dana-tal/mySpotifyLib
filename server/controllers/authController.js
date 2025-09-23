@@ -35,7 +35,7 @@ const getTempCode = (req,res)=>{
         client_id,
         scope,
         redirect_uri,
-       show_dialog: "true",   // 👈 force re-consent */
+     /*  show_dialog: "true", */  // 👈 force re-consent */
       });
 
 
@@ -55,6 +55,7 @@ const setAccessToken = async (req,res) =>{
         //        console.log("calling spotifyService.getAccessToken");
                 const tokenResponse = await spotifyService.fetchAccessToken(code);
 
+                console.log("Scopes:", tokenResponse.data.scope);
                 
                 const access_token = tokenResponse.data.access_token;
                 const refresh_token = tokenResponse.data.refresh_token;

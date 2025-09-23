@@ -11,27 +11,33 @@ const ALBUMS_PER_PAGE = import.meta.env.VITE_ALBUMS_PER_PAGE;
 function Albums() {
 
   const [albums, setAlbums] = useState([]);
-  
+  const [ status, setStatus] = useState("loading")
+  const [ errMsg, setErrMsg] = useState(null);
 
   const fetchAlbums = useCallback( async (pageNum) => {
       try 
       {           
         const myAlbums = await getAlbumsGroup(ALBUMS_PER_PAGE,pageNum);
         setAlbums(myAlbums.items);
+        setStatus("success");
         return ( {total: myAlbums.total} );
       } 
       catch (err) 
       {
         console.error('Error fetching data', err);
+        setStatus("error");
+        setErrMsg(err);
          return ( {total:0} );
       }
     },[]);
 
   return ( <ListContainer title="My Albums"  fetchFunc={fetchAlbums} perPage={ALBUMS_PER_PAGE}>
-            { albums.length >0 && albums.map( item => <Link key={item.album.id}  to={`${item.album.id}`} className="list-item-link"> <AlbumListItem   item={item}/></Link>)}
-            { albums.length ===0 && 
-                  <Loader />
+            { status==='loading' && <Loader />}
+            { status==='success' &&  albums.length >0 && albums.map( item => <Link key={item.album.id}  to={`${item.album.id}`} className="list-item-link"> <AlbumListItem   item={item}/></Link>)}
+            { status==='success' && albums.length ===0 && 
+                  <span>There are no albums in your library yet</span>
               }
+            { status ==='error' &&   <p>Error fetching data: {errMsg?.message || String(errMsg)}</p>}
   </ListContainer>);
 
 }

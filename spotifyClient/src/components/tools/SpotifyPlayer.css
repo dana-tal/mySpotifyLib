@@ -1,0 +1,43 @@
+
+.playButton
+{
+    font-size: 30px;
+    color:#C9AE5D;
+}
+
+@media (min-width:767px) and  (max-width: 911px) {
+
+    .playButton
+    {
+        font-size:27px;
+    }
+}
+
+@media (min-width:767px) and  (max-width: 911px) {
+
+    .playButton
+    {
+      font-size: 30px;
+    }
+ 
+}
+
+
+@media (min-width:912px) and  (max-width: 1023px) {
+
+    .playButton
+    {
+      font-size: 30px;
+    }
+
+   
+}
+
+
+@media (min-width:1024px) and (max-width:1100px) {
+    .playButton
+    {
+      font-size: 35px;
+    }
+
+}

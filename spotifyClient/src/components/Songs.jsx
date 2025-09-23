@@ -11,18 +11,25 @@ const SONGS_PER_PAGE = import.meta.env.VITE_SONGS_PER_PAGE;
 function Songs() {
 
   const [tracks, setTracks] = useState([]);
+  const [ status, setStatus] = useState("loading");   // "loading", "success", "error"
+  const [ errMsg, setErrMsg] = useState(null);
   
   const fetchSongs = useCallback( async (pageNum) => 
    {
       try {
            
           const mySongs = await getSongsGroup(SONGS_PER_PAGE,pageNum);
-          console.log(mySongs);
+          //console.log(mySongs);
           setTracks(mySongs.items);          
+          setStatus("success");
           return ( {total: mySongs.total} );
 
-      } catch (err) {
+      } 
+      catch (err) 
+      {
         console.error('Error fetching data', err);
+        setStatus("error");
+        setErrMsg(err);
          return ( {total: 0} );
       }
     },[]);
@@ -30,10 +37,12 @@ function Songs() {
     /* <Link to={`${item.track.id}`} > */
 
   return (<ListContainer title="My Songs"  fetchFunc={fetchSongs} perPage={SONGS_PER_PAGE}>
-         { tracks.length >0 && tracks.map( item => <Link key={item.track.id}  to={`${item.track.id}`} className="list-item-link"><SongListItem  item={item}/></Link>)}
-         { tracks.length ===0 && 
-            <Loader />
+        { status==='loading' && <Loader />}
+         { status==='success' && tracks.length >0 && tracks.map( item => <Link key={item.track.id}  to={`${item.track.id}`} className="list-item-link"><SongListItem  item={item}/></Link>)}
+         { status==='success' && tracks.length ===0 && 
+            <span>There are no songs in your library yet </span>
          }
+         { status==='error' && <p>Error fetching data: {errMsg?.message || String(errMsg)}</p>}
   </ListContainer>)
   
 }

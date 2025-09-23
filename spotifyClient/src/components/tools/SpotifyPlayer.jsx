@@ -1,5 +1,6 @@
 // SpotifyPlayer.jsx
 import React, { useState, useEffect, useRef } from "react";
+import "./SpotifyPlayer.css";
 
 let globalPlayer = null; // reuse single player across pages
 
@@ -118,13 +119,13 @@ const SpotifyPlayer = ({ token, trackUri }) => {
   };
 
   return (
-    <div style={{ border: "1px solid #ccc", padding: "10px", borderRadius: "8px", width: "300px" }}>
-      <button onClick={togglePlay} disabled={!isReady}>
+    <div style={{  padding: "10px", borderRadius: "8px", width: "300px" }}>
+      <button className="playButton" onClick={togglePlay} disabled={!isReady}>
         {isPaused ? "Play" : "Pause"}
       </button>
-      <div style={{ marginTop: "5px", fontSize: "12px", color: "#555" }}>
+      { /* border: "1px solid #ccc", <div style={{ marginTop: "5px", fontSize: "12px", color: "#555" }}>
         Device ID: {deviceId || "Not ready"}
-      </div>
+      </div> */ }
     </div>
   );
 };
