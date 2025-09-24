@@ -1,7 +1,8 @@
 import { useParams} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import { getSingleAlbum} from '../utils/requests';
-import { isMobile } from '../utils/genFuncs';
+import {  shortenString } from '../utils/genFuncs';
+import MouseHoverPopover from './tools/MouseHoverPopover';
 
 import Loader from './tools/Loader';
 import "./AlbumPage.css";
@@ -36,30 +37,41 @@ function AlbumPage() {
 
     
      if (!albumInfo.name) return <Loader />;
-     const is_mobile  =  isMobile();
-     console.log("is mobile:");
-     console.log(is_mobile);
-
-      const img_obj =is_mobile ?  albumInfo.images[2]:albumInfo.images[1]; 
+   
+      const img_obj =albumInfo.images[1]; 
 
   return (
 
     <>        
-           <div className="frame">
-            <div className="grid-table">
+           <div className="album-frame">
+            <div className="album-grid-table">
              
-                <div className="cell" ><img src={img_obj.url} alt={albumInfo.name} /></div>
-                  <div className="cell"><span className="album-name">Album: {albumInfo.name}</span></div>
-                  <div className="cell"><span className="artists">Artists:</span></div>
-                  <div className="cell">
+                <div className="album-cell" >{<img src={img_obj.url} alt={albumInfo.name} className="album-image"/> }</div>
+                  <div className="album-cell">
+                    <div style={{ display:"flex", flexDirection:"column" }}>
+                        <span className="album-font">Album: </span>
+                         <MouseHoverPopover hoverText={albumInfo.name}>
+                            <span className="album-font">{shortenString(albumInfo.name,21)}</span>
+                        </MouseHoverPopover>
+                    </div>
+                  </div>
+                  <div className="album-cell"><span className="album-font">Artists:</span></div>
+                  <div className="album-cell">
                         <ul>
-                            { albumInfo.artists.map ( (artist) =><li key={artist.id}><Link to={`/library/artists/${artist.id}`}><span className="artists">{artist.name}</span></Link></li> )}
+                            { albumInfo.artists.map ( (artist) =><li key={artist.id}><Link to={`/library/artists/${artist.id}`}><span className="album-font">{artist.name}</span></Link></li> )}
                           </ul>
                   </div>
-                  <div className="cell"><span className="tracks">Tracks: [{albumInfo.tracks.total}]</span></div>
-                  <div className="cell">
+                  <div className="album-cell"><span className="album-font">Tracks: [{albumInfo.tracks.total}]</span></div>
+                  <div className="album-cell">
                         <ul>
-                            { albumInfo.tracks.items.map ( (item) =><li key={item.id}><Link to={`/library/songs/${item.id}`}><span className="tracks">{item.name}</span></Link></li> )}
+                            { albumInfo.tracks.items.map ( (item) =>
+                                                             <li key={item.id} className="album-track-name">
+                                                                <Link to={`/library/songs/${item.id}`}  className="album-font album-track" >
+                                                                   <MouseHoverPopover hoverText={item.name}>
+                                                                      <span className="album-font">{shortenString(item.name,21)}</span>
+                                                                  </MouseHoverPopover>
+                                                                </Link>
+                                                              </li> )}
                           </ul>
                   </div>
               

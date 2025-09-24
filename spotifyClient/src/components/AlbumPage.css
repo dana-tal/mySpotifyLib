@@ -1,6 +1,6 @@
 
 
-.frame
+.album-frame
 {
     min-height: 80dvh;  
     width:80%;
@@ -8,125 +8,141 @@
     margin:auto;
     margin-top:20px;
 }
-.grid-table {
+.album-grid-table {
       display: grid;
       grid-template-columns: 1fr 1fr; /* Two equal columns */
       margin:20px auto;
       align-items: stretch;  
        
     }
-    .cell {
+
+.album-image
+{
+    max-width:280px;
+}
+
+
+    .album-cell {
       padding: 8px;
        display: flex;             /* flex container to center content */
        align-items: center;       /* vertical centering inside the cell */
         justify-content: center;   /* horizontal centering */
         box-sizing: border-box;    /* include padding in width/height */
     }
+
   
    /* Striping rows */
-.cell:nth-child(4n-3),
-.cell:nth-child(4n-2) 
+.album-cell:nth-child(4n-3),
+.album-cell:nth-child(4n-2) 
 {
   background-color:#D1BEA8;/*linear-gradient(145deg,#C6BA8B, white);*/  /* odd row */
+   color:#513B1C;
 }
 
-.cell:nth-child(4n-1),
-.cell:nth-child(4n) {
+.album-cell:nth-child(4n-1),
+.album-cell:nth-child(4n) {
   background-color: #F8F6F0; /* even row */
+   color:#C9AE5D;
 }
 
+.album-font
+{
+    font-family:Arial;
+    font-size: 40px;
+}
 
-.cell ul
+.album-cell ul
 {
     list-style-type: none;
     padding-inline-start: 0px;
 }
 
-.album-name
+.album-track
 {
-    color:#513B1C;
-    font-size: 45px;
+    text-decoration:none;
 }
 
-.artists
+.album-track-name
 {
-    color:#C9AE5D;
-     font-size:40px;
-}
-  
-.tracks
-{
-      color:#513B1C;
-      font-size: 38px;
+    margin-bottom:7px;
 }
 
 
-@media (max-width: 767px) {
-   
-    .album-name
+@media (max-width: 374px) {
+    .album-font
     {
-        font-size:unset;
+        font-size:19px;
     }
+
+    .album-grid-table {
+      grid-template-columns: 1fr ; 
+       
+    }
+
     
-    .artists
+    .album-image
     {
-        font-size:unset;
+        max-width:191px;
     }
 
-    .tracks
+}
+
+@media (min-width:375px) and  (max-width: 767px) {
+
+   
+    .album-font
     {
-        font-size:unset;
+        font-size:21px;
     }
-  
+
+    .album-grid-table {
+      grid-template-columns: 1fr ; 
+       
+    }
+
+    
+    .album-image
+    {
+        max-width:218px;
+    }
+
+   
 }
 
 @media (min-width:767px) and  (max-width: 911px) {
    
-    .album-name
-    {
-        font-size:18px;
+    .album-grid-table {
+      grid-template-columns: 1fr ; 
+       
     }
 
-     .artists
+    .album-font
     {
-        font-size:18px;
+        font-size:27px;
     }
 
-    .tracks
-    {
-        font-size:16px;
-    }
 }
 
 @media (min-width:912px) and  (max-width: 1023px) {
    
-    .album-name
+    .album-font
     {
-        font-size:24px;
+        font-size:19px;
     }
-      .artists
-    {
-        font-size:24px;
-    }
-    .tracks 
-    {
-        font-size:22px;
-    }
+    
 }
 
 
 @media (min-width:1024px) and (max-width:1100px) {
+
+      .album-grid-table {
+      grid-template-columns: 1fr ; 
+       
+    }
   
-    .album-name
-    {
-        font-size:31px;
-    }
-      .artists
-    {
-        font-size:31px;
-    }
-    .tracks
+    .album-font
     {
         font-size:29px;
     }
+    
 }
