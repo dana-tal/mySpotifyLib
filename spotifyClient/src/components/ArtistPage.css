@@ -1,6 +1,6 @@
 
 
-.frame
+.artist-frame
 {
     min-height: 80dvh;  
     width:80%;
@@ -8,79 +8,121 @@
     margin:auto;
     margin-top:20px;
 }
-.grid-table {
+.artist-grid-table {
       display: grid;
       grid-template-columns: 1fr 1fr; /* Two equal columns */
       margin:20px auto;
       align-items: stretch;  
        
     }
-    .cell {
+    .artist-cell {
       padding: 8px;
        display: flex;             /* flex container to center content */
        align-items: center;       /* vertical centering inside the cell */
         justify-content: center;   /* horizontal centering */
         box-sizing: border-box;    /* include padding in width/height */
+        font-size: 45px;
+        font-family:Arial;
     }
   
-   /* Striping rows */
-.cell:nth-child(4n-3),
-.cell:nth-child(4n-2) 
+ 
+.artist-font
 {
-  background-color:#D1BEA8;/*linear-gradient(145deg,#C6BA8B, white);*/  /* odd row */
+    font-size: 45px;
+      font-family:Arial;
 }
 
-.cell:nth-child(4n-1),
-.cell:nth-child(4n) {
-  background-color: #F8F6F0; /* even row */
-}
-
-
-.cell ul
+.artist-cell ul
 {
     list-style-type: none;
     padding-inline-start: 0px;
 }
 
-.artist-name
-{
-    color:#513B1C;
-    font-size: 45px;
-}
     
+.artist-cell:nth-child(4n-3),
+.artist-cell:nth-child(4n-2) 
+{
+  background-color:#D1BEA8;/*linear-gradient(145deg,#C6BA8B, white);*/  /* odd row */
+   color:#513B1C;
+}
+
+.artist-cell:nth-child(4n-1),
+.artist-cell:nth-child(4n) {
+  background-color: #F8F6F0; /* even row */
+  color:#C9AE5D;
+}
 
 
 @media (max-width: 767px) {
+
+   .artist-grid-table {
+      grid-template-columns: 1fr ; /* one column */
+       
+    }
+
+    .artist-font
+    {
+       font-size:16px;      
+    }
+
+   .artist-cell
+   {
+      font-size: 16px;
+   }
    .artist-name
    {
-      font-size: unset;
+      text-decoration:underline;
    }
    
-    
-  
 }
 
 @media (min-width:767px) and  (max-width: 911px) {
-   .artist-name
+    
+   .artist-grid-table {
+      grid-template-columns: 1fr ; /* one column */
+       
+    }
+
+   .artist-cell
    {
       font-size: 20px;
    }
+
+     .artist-font
+    {
+       font-size:20px;
+       font-family:Arial;
+    }
+
+     .artist-name
+   {
+      text-decoration:underline;
+   }
+   
   
 }
 
 @media (min-width:912px) and  (max-width: 1023px) {
-   .artist-name
+   .artist-cell
    {
       font-size: 28px;
    }
+
+    .artist-font
+    {
+       font-size:28px;      
+    }
     
 }
 
 
 @media (min-width:1024px) and (max-width:1100px) {
-   .artist-name
+   .artist-cell
    {
       font-size: 35px;
    }
-   
+   .artist-font
+    {
+       font-size:35px;      
+    }
 }

@@ -1,12 +1,13 @@
 import { useParams} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import { getSingleArtist} from '../utils/requests';
-import { isMobile } from '../utils/genFuncs';
+import { isMobile, shortenString } from '../utils/genFuncs';
+import MouseHoverPopover from './tools/MouseHoverPopover';
 
 import Loader from './tools/Loader';
 import "./ArtistPage.css";
 
-function SongPage() {
+function ArtistPage() {
 
     const paramsObj = useParams();
     const [artistInfo, setArtistInfo] = useState({});
@@ -44,20 +45,27 @@ function SongPage() {
   return (
 
     <>        
-           <div className="frame">
-            <div className="grid-table">
+           <div className="artist-frame">
+            <div className="artist-grid-table">
             
-                <div className="cell" ><img src={img_obj.url} alt={artistInfo.name} /></div>
-                  <div className="cell" ><span className="artist-name">Artist: {artistInfo.name}</span></div>
+                <div className="artist-cell" ><img src={img_obj.url} alt={artistInfo.name} /></div>
+                  <div className="artist-cell" >
+                    <div style={{ display:"flex", flexDirection:"column" }}>
+                       <span>Artist: </span>
+                       <MouseHoverPopover hoverText={artistInfo.name}>
+                              <span className="artist-name artist-font"> {shortenString(artistInfo.name,21)}</span>
+                      </MouseHoverPopover>
+                     </div>
+                  </div>
 
-                  <div className="cell"><span>Followers Total: </span></div>
-                  <div className="cell"><span >{artistInfo.followers.total}</span></div>
+                  <div className="artist-cell"><span>Followers Total: </span></div>
+                  <div className="artist-cell"><span >{artistInfo.followers.total}</span></div>
                   
-                  <div className="cell"><span>Popularity: </span></div>
-                  <div className="cell"><span >{artistInfo.popularity}</span></div>
+                  <div className="artist-cell"><span>Popularity: </span></div>
+                  <div className="artist-cell"><span >{artistInfo.popularity}</span></div>
 
-                  <div className="cell"><span>Genres: </span></div>
-                  <div className="cell">
+                  <div className="artist-cell"><span>Genres: </span></div>
+                  <div className="artist-cell">
                        {artistInfo.genres.length >0 && <ul>
                                  { artistInfo.genres.map( (gen) => <li id={gen}>{gen}</li>) }
                        </ul>}
@@ -73,4 +81,4 @@ function SongPage() {
   )
 }
 
-export default SongPage
+export default ArtistPage
