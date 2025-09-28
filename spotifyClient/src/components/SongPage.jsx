@@ -43,16 +43,13 @@ function SongPage() {
      console.log("is mobile:");
      console.log(is_mobile);
 
-     // const img_obj =is_mobile ?  songInfo.album.images[2]:songInfo.album.images[1]; 
      const img_obj = songInfo.album.images[1]; 
-    //  console.log("images");
-    //  console.log(songInfo.album.images );
-
+  
   return (
 
     <>        
            <div className="song-frame ">
-            <div > {/*<!-- className="song-grid-table" --> */}
+            <div className="song-grid-table">
                 <div className="cell" ><img src={img_obj.url} alt={songInfo.album.name} /></div>
                   <div className="cell" ><MouseHoverPopover hoverText={songInfo.name}><span className="song-font">Song:</span><span className="song-name song-font"> {shortenString(songInfo.name,21) }</span></MouseHoverPopover></div>
                   <div className="cell"><span className="song-album-name song-font">Album Name: </span></div>
@@ -77,14 +74,13 @@ function SongPage() {
                     </div>
 
 
-                { /* <div className="cell">  token={songInfo.accessToken}
-                     YouTube
+                  <div className="cell song-font">
+                     YouTube Video:
                   </div>
-                  <div className="cell">
-                   
+                  <div className="cell">      
                      <YouTubePlayer videoId={songInfo.youTubeVideoId} />
-                  </div> */}
-                   { /*<a href={`https://www.youtube.com/watch?v=${songInfo.youTubeVideoId}`} target="_blank" rel="noopener noreferrer" >Watch on YouTube </a> */}
+                  </div> 
+                   
             </div>
             
            

@@ -13,7 +13,7 @@
       grid-template-columns: 1fr 1fr; /* Two equal columns */
       margin:20px auto;
       align-items: stretch;  
-       
+         justify-content: center;
     }
     .cell {
       padding: 8px;
@@ -68,19 +68,40 @@
 }
 
 
-@media (max-width: 767px) {
+@media  (min-width:300px) and  (max-width: 400px) {
 
     .song-frame
     {
         width:initial;
     }
 
-     .song-grid-table 
+  .song-grid-table
+  {
+       grid-template-columns: 1fr;
+  }
+
+   .song-font 
    {
-    display:initial; /* revert from grid to normal block layout */
-    grid-template-columns: none; /* remove grid columns */
-    margin: initial; /* optional: reset margin */
-    align-items: initial; /* optional: reset alignment */
+       font-size:22px;
+   }
+
+   .song-name
+   {
+      text-decoration:underline;
+   }
+}
+
+
+@media  (min-width:401px) and (max-width: 767px) {
+
+    .song-frame
+    {
+        width:initial;
+    }
+
+  .song-grid-table
+  {
+       grid-template-columns: 1fr;
   }
 
    .song-font 
@@ -98,7 +119,7 @@
 
     .song-font
     {
-      font-size: 30px;
+      font-size: 22px;
     }
 
    
