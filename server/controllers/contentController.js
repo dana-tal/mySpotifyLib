@@ -9,8 +9,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-
-
 const getSongsPage = async (req,res) =>{
 
     try
@@ -19,12 +17,52 @@ const getSongsPage = async (req,res) =>{
         page = parseInt(page);
         limit = parseInt(limit);
           
+       // const search_results = await spotifyService.searchMyLibSongs(req.session.access_token,'home');
+       // console.log("testing search:");
+       // console.log(search_results);
+
         const resp = await spotifyService.getSongsGroup(req.session.access_token,limit,page);
         res.json (resp.data);    
     }
     catch (err) 
     {
         errLogger.error(`getSongsPage failed: ${err.message}`, { stack: err.stack });                
+        return res.status(500).json({ error: err.message });
+    }
+}
+
+const getSongSearchResults = async (req,res) =>{
+
+    try
+    {
+        let { page = 0, limit = 50 , query_text,search_type } = req.query;
+        page = parseInt(page);
+        limit = parseInt(limit);
+
+        console.log("page="+page);
+        console.log("query_text="+query_text);
+        console.log("search_type="+search_type);
+
+        let resp;
+        
+        if (search_type==='library')
+        {
+            resp = await spotifyService.searchMyLibSongs(req.session.access_token,query_text,limit,page);
+        }
+        else // search in global spotify 
+        {
+           const searchResult  = await spotifyService.getSpotifySearchResult(req.session.access_token,limit,page,'track',query_text);
+          // console.log("spotify searchResult:");
+          // console.log(searchResult);
+           resp = searchResult.data.tracks;
+           console.log("resp");
+           console.log(resp);
+        }
+        res.json(resp);
+    }
+    catch (err) 
+    {
+        errLogger.error(`getSongSearchResults failed: ${err.message}`, { stack: err.stack });                
         return res.status(500).json({ error: err.message });
     }
 }
@@ -126,4 +164,12 @@ const getArtistsPage = async (req,res)=>{
     }
 }
 
-export default { getSongsPage, getAlbumsPage, getArtistsPage, getSingleSongInfo,getSingleAlbumInfo,getSingleArtistInfo};
+export default { 
+    getSongSearchResults,
+    getSongsPage, 
+    getAlbumsPage, 
+    getArtistsPage, 
+    getSingleSongInfo,
+    getSingleAlbumInfo,
+    getSingleArtistInfo
+};

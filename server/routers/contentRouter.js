@@ -5,6 +5,7 @@ const router = express.Router();
 
 
 router.get('/songs',contentController.getSongsPage);
+router.get('/songs/search',contentController.getSongSearchResults);
 router.get('/songs/:songId', contentController.getSingleSongInfo);
 router.get('/albums', contentController.getAlbumsPage);
 router.get('/albums/:albumId',contentController.getSingleAlbumInfo);

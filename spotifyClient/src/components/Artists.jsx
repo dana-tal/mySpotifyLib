@@ -39,7 +39,7 @@ function Artists(props) {
     },[]);
 
 
-  return (<CursorListContainer title="My Followed Artists"  fetchFunc={fetchArtists} >
+  return (<CursorListContainer title="My Followed Artists"  fetchFunc={fetchArtists} storageKey="artists">
            { status==='loading' && <Loader />}
          { status==='success' && artists.length >0 && artists.map( item =>  <Link key={item.id}  to={`${item.id}`} className="list-item-link"><ArtistListItem   item={item}/></Link>)}
          { status==='success' && artists.length ===0 &&         

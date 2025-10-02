@@ -31,7 +31,7 @@ function Albums() {
       }
     },[]);
 
-  return ( <ListContainer title="My Albums"  fetchFunc={fetchAlbums} perPage={ALBUMS_PER_PAGE}>
+  return ( <ListContainer title="My Albums"  fetchFunc={fetchAlbums} perPage={ALBUMS_PER_PAGE} storageKey="albums">
             { status==='loading' && <Loader />}
             { status==='success' &&  albums.length >0 && albums.map( item => <Link key={item.album.id}  to={`${item.album.id}`} className="list-item-link"> <AlbumListItem   item={item}/></Link>)}
             { status==='success' && albums.length ===0 && 

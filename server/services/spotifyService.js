@@ -40,30 +40,6 @@ const fetchSDKToken = (refresh_token) =>{
 }
 
 
-/*
-app.get("/spotify/token", async (req, res) => {
-  if (!req.session.refresh_token) {
-    return res.status(401).json({ error: "Not logged in" });
-  }
-
-  try {
-    const response = await axios.post("https://accounts.spotify.com/api/token", new URLSearchParams({
-      grant_type: "refresh_token",
-      refresh_token: req.session.refresh_token,
-      client_id: process.env.SPOTIFY_CLIENT_ID,
-      client_secret: process.env.SPOTIFY_CLIENT_SECRET,
-    }), {
-      headers: { "Content-Type": "application/x-www-form-urlencoded" }
-    });
-
-    res.json({ access_token: response.data.access_token });
-  } catch (err) {
-    console.error(err.response?.data || err.message);
-    res.status(500).json({ error: "Failed to refresh access token" });
-  }
-});
-*/
-
 
 
 const fetchUserId = (access_token) =>{
@@ -111,6 +87,64 @@ const getSongsGroup = async (accessToken, limit,page) =>{
   return tracksResponse;
 
 }
+
+
+const getSpotifySearchResult = async (accessToken,limit,page,type,search_term) =>{
+    
+  const offset = page * limit;
+
+  const search_obj = new URLSearchParams({limit,offset,q:search_term,type});
+  const url =  process.env.SPOTIFY_SEARCH_ENTRY_POINT+'?'+search_obj;
+    
+  const searchResponse = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+  return searchResponse;
+
+}
+
+
+const searchMyLibSongs = async (accessToken, query, limit = 50, search_page = 0) => {
+  let results = [];
+  let page = 0;
+  let hasMore = true;
+  const lowerQuery = query.toLowerCase();
+
+  // Step 1: Collect all matches
+  while (hasMore) {
+    const info = await getSongsGroup(accessToken, limit, page);
+    const data = info.data;
+
+    const matches = data.items.filter((item) => {
+      const track = item.track;
+      return (
+        track.name.toLowerCase().includes(lowerQuery) ||
+        track.artists.some((artist) =>
+          artist.name.toLowerCase().includes(lowerQuery)
+        )
+      );
+    });
+
+    results.push(...matches);
+
+    hasMore = !!data.next;
+    page++;
+  }
+
+  // Step 2: Paginate matches
+  const total = results.length;
+  const start = search_page * limit;
+  const end = start + limit;
+  const items = results.slice(start, end);
+
+  // Step 3: Return structured object
+  return {
+    items,
+    total
+  };
+};
 
 
 
@@ -197,5 +231,7 @@ export default {
   getArtistsList,
   getSingleSong,
   getSingleAlbum,
-  getSingleArtist 
+  getSingleArtist,
+  searchMyLibSongs,
+  getSpotifySearchResult,
 }

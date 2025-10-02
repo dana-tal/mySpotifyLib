@@ -1,4 +1,4 @@
-import { getSongsGroup} from '../utils/requests';
+import { getSongsGroup, getSongsSearchResult} from '../utils/requests';
 import { useState ,useCallback} from 'react';
 import SongListItem from './SongListItem';
 import Loader from './tools/Loader';
@@ -14,11 +14,21 @@ function Songs() {
   const [ status, setStatus] = useState("loading");   // "loading", "success", "error"
   const [ errMsg, setErrMsg] = useState(null);
   
-  const fetchSongs = useCallback( async (pageNum) => 
+  const fetchSongs = useCallback( async (pageNum,mode,searchType,searchTerm) => 
    {
       try {
-           
-          const mySongs = await getSongsGroup(SONGS_PER_PAGE,pageNum);
+            let mySongs; 
+            if (mode === 'normal')
+            {
+                mySongs = await getSongsGroup(SONGS_PER_PAGE,pageNum);
+            }
+            else // we are in search mode
+            {
+               mySongs = await getSongsSearchResult(SONGS_PER_PAGE,pageNum,searchType,searchTerm);
+               //console.log("in fetchSongs, response:");
+               //console.log(mySongs);
+            }
+          
           //console.log(mySongs);
           setTracks(mySongs.items);          
           setStatus("success");
@@ -27,7 +37,7 @@ function Songs() {
       } 
       catch (err) 
       {
-        console.error('Error fetching data', err);
+        console.error('In fetchSongs, Error fetching data', err);
         setStatus("error");
         setErrMsg(err);
          return ( {total: 0} );
@@ -36,9 +46,11 @@ function Songs() {
 
     /* <Link to={`${item.track.id}`} > */
 
-  return (<ListContainer title="My Songs"  fetchFunc={fetchSongs} perPage={SONGS_PER_PAGE}>
+  return (<ListContainer title="My Songs"  fetchFunc={fetchSongs} perPage={SONGS_PER_PAGE} storageKey="songs">
         { status==='loading' && <Loader />}
-         { status==='success' && tracks.length >0 && tracks.map( item => <Link key={item.track.id}  to={`${item.track.id}`} className="list-item-link"><SongListItem  item={item}/></Link>)}
+         { status==='success' && tracks.length >0 && tracks.map( item => {  
+            const my_obj = item.track ? item.track : item ;
+            return <Link key={my_obj.id}  to={`${my_obj.id}`} className="list-item-link"><SongListItem  item={item}/></Link> })}
          { status==='success' && tracks.length ===0 && 
             <span>There are no songs in your library yet </span>
          }

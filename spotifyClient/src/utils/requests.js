@@ -9,6 +9,18 @@ const getSongsGroup = async (limit,page) =>{
     return resp.data; 
 }
 
+
+/* search_target may be : library or spotify  */
+
+const getSongsSearchResult = async (limit,page,search_target,search_term) =>{
+
+    const search_obj = new URLSearchParams({limit,page,query_text:search_term, search_type:search_target });
+    const url =  DOMAIN+import.meta.env.VITE_SONGS_ENTRY_POINT+'search?'+search_obj;
+    const resp = await axios.get(url);
+    return resp.data; 
+}
+
+
 const getSingleSong = async (songId) =>{
 
     const url = DOMAIN+import.meta.env.VITE_SONGS_ENTRY_POINT+songId;
@@ -61,5 +73,5 @@ const getArtistsList = async (limit,after=null,before=null)=>{
     return resp.data; 
 }
 
-export { getSongsGroup, getAlbumsGroup, getArtistsList ,getSingleSong,getSingleAlbum,getSingleArtist};
+export { getSongsGroup, getAlbumsGroup, getArtistsList ,getSingleSong,getSingleAlbum,getSingleArtist, getSongsSearchResult};
 

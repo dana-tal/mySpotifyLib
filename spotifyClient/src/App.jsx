@@ -25,6 +25,12 @@ function App() {
     }
    else if ( loginResp ==='success')
    {
+        sessionStorage.setItem("songs_mode","normal");
+        sessionStorage.setItem("songs_searchType",'library');
+        sessionStorage.setItem("songs_searchTerm",'');
+        sessionStorage.setItem("songs_normal_pageNum",1);
+        sessionStorage.setItem("songs_library_search_pageNum",1);
+        sessionStorage.setItem("songs_spotify_search_pageNum",1);
         navigate("/library/songs");
    }
     // if (loginResp !== 'success') return;
