@@ -55,14 +55,7 @@ function ListContainer({title,fetchFunc,perPage,children,storageKey}) {
 //  console.log(pageNum);
 
   const handleModeChange =(event)=>{
-
-      // setMode(event.target.value);
-     // handleParamsChange(event.target.value,searchType,searchTerm);
-      organizeParams(event.target.value,searchType,searchTerm);
-   /*  if (event.target.value==='normal')
-     {
-       setAfterSearch(false);
-     }*/
+    organizeParams(event.target.value,searchType,searchTerm);  
   }
 
   const handlePageChange = (pageNumber)=>
@@ -73,7 +66,7 @@ function ListContainer({title,fetchFunc,perPage,children,storageKey}) {
   const handleParamsChange = (mode_param,search_type_param='',search_term_param='' ) =>
   {
     organizeParams(mode_param,search_type_param,search_term_param);
-    //setAfterSearch(true);
+
   }
 
 
@@ -147,7 +140,7 @@ function ListContainer({title,fetchFunc,perPage,children,storageKey}) {
                   </RadioGroup>
                 </FormControl>
 
-                {mode === 'search' && <SearchBox  onSearchChange={handleParamsChange} searchType={searchType}/>}
+                {mode === 'search' && <SearchBox  onSearchChange={handleParamsChange} searchType={searchType} searchTerm={searchTerm} />}
                 { console.log("mode="+mode) }
                 { console.log("afterSearch is: ",afterSearch)}
                 { (afterSearch || mode==='normal')  &&  

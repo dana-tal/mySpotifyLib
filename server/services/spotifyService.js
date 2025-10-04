@@ -106,6 +106,47 @@ const getSpotifySearchResult = async (accessToken,limit,page,type,search_term) =
 }
 
 
+const searchMyLibAlbums = async (accessToken, query, limit = 50, search_page = 0) => {
+  
+    let results = [];
+    let page = 0;
+    let hasMore = true;
+    const lowerQuery = query.toLowerCase();
+
+     while (hasMore) {
+         const info = await getAlbumsGroup(accessToken, limit, page);
+         const data = info.data;
+
+          const matches = data.items.filter((item) => {
+          const album = item.album;
+          return (
+            album.name.toLowerCase().includes(lowerQuery) ||
+            album.artists.some((artist) =>
+              artist.name.toLowerCase().includes(lowerQuery)
+            )
+          );
+        });
+
+        results.push(...matches);
+        hasMore = !!data.next;
+        page++;
+     }
+
+        
+      // Step 2: Paginate matches
+      const total = results.length;
+      const start = search_page * limit;
+      const end = start + limit;
+      const items = results.slice(start, end);
+
+      // Step 3: Return structured object
+      return {
+        items,
+        total
+      };
+
+}
+
 const searchMyLibSongs = async (accessToken, query, limit = 50, search_page = 0) => {
   let results = [];
   let page = 0;
@@ -234,4 +275,5 @@ export default {
   getSingleArtist,
   searchMyLibSongs,
   getSpotifySearchResult,
+  searchMyLibAlbums,
 }

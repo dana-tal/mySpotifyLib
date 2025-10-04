@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 
-function SearchBox({ onSearchChange ,searchType='library'}) {
+function SearchBox({ onSearchChange ,searchType='library', searchTerm=''}) {
 
 console.log("in SearchBox, search_type="+searchType);
  const handleSubmit = (e)=>{
@@ -42,7 +42,7 @@ console.log("in SearchBox, search_type="+searchType);
                         <FormControlLabel value="library" sx={{ padding:"1px"}} control={<Radio />} label="This Library" />
                         <FormControlLabel value="spotify" sx={{ padding:"1px"}} control={<Radio />} label="Spotify" />
                     </RadioGroup>
-                    <TextField  required id="search_text" name="search_text" label="Enter search words" variant="outlined" />
+                    <TextField  required id="search_text" name="search_text" label="Enter search words" variant="outlined" defaultValue={searchTerm} />
                     <Button type="submit" variant="contained" size="medium">Submit</Button>
             </FormControl>
         </form>

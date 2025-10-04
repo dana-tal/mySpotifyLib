@@ -40,6 +40,7 @@ const getSongSearchResults = async (req,res) =>{
         limit = parseInt(limit);
 
         console.log("page="+page);
+        console.log("limit="+limit);
         console.log("query_text="+query_text);
         console.log("search_type="+search_type);
 
@@ -52,12 +53,11 @@ const getSongSearchResults = async (req,res) =>{
         else // search in global spotify 
         {
            const searchResult  = await spotifyService.getSpotifySearchResult(req.session.access_token,limit,page,'track',query_text);
-          // console.log("spotify searchResult:");
-          // console.log(searchResult);
            resp = searchResult.data.tracks;
-           console.log("resp");
-           console.log(resp);
+          // console.log("resp");
+           //console.log(resp);
         }
+        console.log("total="+resp.total);
         res.json(resp);
     }
     catch (err) 
@@ -65,6 +65,41 @@ const getSongSearchResults = async (req,res) =>{
         errLogger.error(`getSongSearchResults failed: ${err.message}`, { stack: err.stack });                
         return res.status(500).json({ error: err.message });
     }
+}
+
+const getAlbumSearchResults = async (req,res) => {
+
+    try
+    {
+        let { page = 0, limit = 50 , query_text,search_type } = req.query;
+        page = parseInt(page);
+        limit = parseInt(limit);
+
+        console.log("page="+page);
+        console.log("query_text="+query_text);
+        console.log("search_type="+search_type);
+
+         let resp;
+        
+        if (search_type==='library')
+        {
+            resp = await spotifyService.searchMyLibAlbums(req.session.access_token,query_text,limit,page);
+        }
+        else // search in global spotify 
+        {
+           const searchResult  = await spotifyService.getSpotifySearchResult(req.session.access_token,limit,page,'album',query_text);
+           resp = searchResult.data.albums;
+           console.log("resp");
+           console.log(resp);
+        }
+        res.json(resp);
+    }
+    catch (err) 
+    {
+        errLogger.error(`getAlbumSearchResults failed: ${err.message}`, { stack: err.stack });                
+        return res.status(500).json({ error: err.message });
+    }
+
 }
 
 const getSingleSongInfo = async (req,res) =>{
@@ -166,6 +201,7 @@ const getArtistsPage = async (req,res)=>{
 
 export default { 
     getSongSearchResults,
+    getAlbumSearchResults,
     getSongsPage, 
     getAlbumsPage, 
     getArtistsPage, 

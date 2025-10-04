@@ -55,7 +55,7 @@ const setAccessToken = async (req,res) =>{
         //        console.log("calling spotifyService.getAccessToken");
                 const tokenResponse = await spotifyService.fetchAccessToken(code);
 
-                console.log("Scopes:", tokenResponse.data.scope);
+          //      console.log("Scopes:", tokenResponse.data.scope);
                 
                 const access_token = tokenResponse.data.access_token;
                 const refresh_token = tokenResponse.data.refresh_token;
@@ -68,7 +68,7 @@ const setAccessToken = async (req,res) =>{
                 //  console.log("Spotify user data:", userResponse.data);
                   const userId = userResponse.data.id;
                   
-                 console.log("userId: "+userId);
+              //   console.log("userId: "+userId);
 
                 req.session.userId = userId;
                 req.session.access_token = access_token;
@@ -171,7 +171,7 @@ const getSDKToken = async (req, res) => {
     }
 
     const resp = await spotifyService.fetchSDKToken(req.session.refresh_token);
-    console.log("SDK Token scopes:", resp.data.scope);
+ //   console.log("SDK Token scopes:", resp.data.scope);
     const access_token = resp.data.access_token;
 
     res.json({ access_token });

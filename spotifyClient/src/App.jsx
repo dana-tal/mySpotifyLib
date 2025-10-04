@@ -31,6 +31,13 @@ function App() {
         sessionStorage.setItem("songs_normal_pageNum",1);
         sessionStorage.setItem("songs_library_search_pageNum",1);
         sessionStorage.setItem("songs_spotify_search_pageNum",1);
+
+        sessionStorage.setItem("albums_mode","normal");
+        sessionStorage.setItem("albums_searchType",'library');
+        sessionStorage.setItem("albums_searchTerm",'');
+        sessionStorage.setItem("albums_normal_pageNum",1);
+        sessionStorage.setItem("albums_library_search_pageNum",1);
+        sessionStorage.setItem("albums_spotify_search_pageNum",1);
         navigate("/library/songs");
    }
     // if (loginResp !== 'success') return;
