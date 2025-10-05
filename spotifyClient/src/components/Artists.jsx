@@ -16,6 +16,11 @@ function Artists(props) {
   const [ status, setStatus] = useState("loading");   // "loading", "success", "error"
   const [ errMsg, setErrMsg] = useState(null);
  
+
+  
+// in spotify get followed artists api,  after means The cursor to use as key to find the next page of items.
+// in spotify get followed artists api  before means The cursor to use as key to find the previous page of items.
+
   const fetchArtists = useCallback( async (after=null, before=null) => 
    {
       try {

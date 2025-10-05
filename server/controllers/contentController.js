@@ -89,8 +89,8 @@ const getAlbumSearchResults = async (req,res) => {
         {
            const searchResult  = await spotifyService.getSpotifySearchResult(req.session.access_token,limit,page,'album',query_text);
            resp = searchResult.data.albums;
-           console.log("resp");
-           console.log(resp);
+          // console.log("resp");
+          // console.log(resp);
         }
         res.json(resp);
     }

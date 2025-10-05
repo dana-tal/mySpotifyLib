@@ -38,6 +38,11 @@ function App() {
         sessionStorage.setItem("albums_normal_pageNum",1);
         sessionStorage.setItem("albums_library_search_pageNum",1);
         sessionStorage.setItem("albums_spotify_search_pageNum",1);
+
+        sessionStorage.setItem("artists_currentPage","");
+        sessionStorage.setItem("artists_nextPage","");
+        sessionStorage.setItem("artists_cursorHistory",JSON.stringify([]));
+        sessionStorage.setItem("artists_hasNext",JSON.stringify(false));
         navigate("/library/songs");
    }
     // if (loginResp !== 'success') return;
