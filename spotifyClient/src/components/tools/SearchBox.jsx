@@ -22,7 +22,7 @@ console.log("in SearchBox, search_type="+searchType);
      console.log("search_text: "+search_term);
 
      console.log("inside handle submit");
-     onSearchChange('search', search_type,search_term);
+     onSearchChange( search_type,search_term);
  }
 
  

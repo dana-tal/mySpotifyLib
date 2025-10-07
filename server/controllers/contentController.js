@@ -67,6 +67,43 @@ const getSongSearchResults = async (req,res) =>{
     }
 }
 
+
+
+const getArtistSearchResults = async (req,res) =>{
+
+    try
+    {
+        let { page = 0, limit = 50 , query_text,search_type } = req.query;
+        page = parseInt(page);
+        limit = parseInt(limit);
+
+        console.log("page="+page);
+        console.log("query_text="+query_text);
+        console.log("search_type="+search_type);
+
+        let resp;
+
+        if (search_type==='library')
+        {
+            resp = await spotifyService.searchMyLibArtists(req.session.access_token,query_text,limit,page);
+        }
+        else // search in global spotify 
+        {
+           const searchResult  = await spotifyService.getSpotifySearchResult(req.session.access_token,limit,page,'artist',query_text);
+           resp = searchResult.data.artists;
+          // console.log("resp");
+          // console.log(resp);
+        }
+        res.json(resp);
+    }
+    catch (err) 
+    {
+        errLogger.error(`getArtistSearchResults failed: ${err.message}`, { stack: err.stack });                
+        return res.status(500).json({ error: err.message });
+    }
+
+}
+
 const getAlbumSearchResults = async (req,res) => {
 
     try
@@ -118,8 +155,8 @@ const getSingleSongInfo = async (req,res) =>{
         const resp2 = await spotifyService.fetchSDKToken(req.session.refresh_token);
         resp.data.accessToken = resp2.data.access_token;
 
-       console.log("song access token:");
-        console.log(resp.data.accessToken);
+    //   console.log("song access token:");
+      //  console.log(resp.data.accessToken);
 
         // response.data.access_token 
       // console.log("resp.data=");
@@ -202,6 +239,7 @@ const getArtistsPage = async (req,res)=>{
 export default { 
     getSongSearchResults,
     getAlbumSearchResults,
+    getArtistSearchResults,
     getSongsPage, 
     getAlbumsPage, 
     getArtistsPage, 

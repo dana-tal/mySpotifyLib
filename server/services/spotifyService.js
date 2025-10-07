@@ -106,6 +106,7 @@ const getSpotifySearchResult = async (accessToken,limit,page,type,search_term) =
 }
 
 
+
 const searchMyLibAlbums = async (accessToken, query, limit = 50, search_page = 0) => {
   
     let results = [];
@@ -262,6 +263,46 @@ const getArtistsList = async (accessToken, limit,after=null,before=null) =>
 }
 
 
+const searchMyLibArtists = async (accessToken, query, limit = 50, search_page = 0) => {
+  let results = [];
+  let after = null;
+  let hasMore = true;
+  const lowerQuery = query.toLowerCase();
+
+  // Step 1: Collect all matches
+  while (hasMore) 
+  {
+    const info = await getArtistsList(accessToken, 50, after); // calling mith maxiumu limit=50, to save function calls 
+    const data = info.data.artists;
+
+    const matches = data.items.filter((item) => {
+      return (
+        item.name.toLowerCase().includes(lowerQuery) 
+      );
+    });
+
+    results.push(...matches);
+
+    hasMore = Boolean(data.next);
+    after = data.next;
+  }
+
+  // Step 2: Paginate matches
+  const total = results.length;
+  const start = search_page * limit;
+  const end = start + limit;
+  const items = results.slice(start, end);
+
+  // Step 3: Return structured object
+  return {
+    items,
+    total
+  };
+};
+
+
+
+
 export default { 
   fetchAccessToken,
   fetchUserId,
@@ -276,4 +317,5 @@ export default {
   searchMyLibSongs,
   getSpotifySearchResult,
   searchMyLibAlbums,
+  searchMyLibArtists,
 }
