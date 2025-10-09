@@ -252,12 +252,20 @@ const getArtistsList = async (accessToken, limit,after=null,before=null) =>
     {
        url.searchParams.set("before",before);
     }
+
+    console.log("getArtistsList");
+    console.log("url:");
+    console.log(url);
+
    
     const artistsResponse = await axios.get(url, {
           headers: {
             Authorization: `Bearer ${accessToken}`
           }
         });
+
+    console.log("response");
+    console.log(artistsResponse);
     
     return artistsResponse;
 }
@@ -284,7 +292,8 @@ const searchMyLibArtists = async (accessToken, query, limit = 50, search_page = 
     results.push(...matches);
 
     hasMore = Boolean(data.next);
-    after = data.next;
+    after = data.cursors.after;
+    //after = data.next;
   }
 
   // Step 2: Paginate matches

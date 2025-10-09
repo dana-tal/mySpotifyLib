@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 // in spotify get followed artists api,  after means The cursor to use as key to find the next page of items.
 
-function CursorListContainer({ title, fetchFunc, children, storageKey }) {
+function CursorListContainer({  fetchFunc, children, storageKey }) {
 
    const key = (name) => `${storageKey}_${name}`; 
 
@@ -83,7 +83,7 @@ function CursorListContainer({ title, fetchFunc, children, storageKey }) {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <h1 style={{ color: "#654321" }}>{title}</h1>
+     
       <div className="list-container">{children}</div>
       <CursorPagination
         onPrev={prevHandler}

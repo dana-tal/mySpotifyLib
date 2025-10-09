@@ -10,6 +10,9 @@ export default defineConfig({
       '/api': 'http://localhost:3000',
       '/auth': 'http://localhost:3000',
     },
-  }
+  },
+  build: {
+    sourcemap: true,
+  },
   
 })

@@ -72,17 +72,14 @@ const getAlbumsGroup = async (limit, page)=>{
     return resp.data; 
 }
 
-const getArtistsList = async (limit,after=null,before=null)=>{
+const getArtistsList = async (limit,after=null)=>{
 
     let url = DOMAIN+import.meta.env.VITE_ARTISTS_ENTRY_POINT+'?limit='+limit;
     if (after)
     {
         url += '&after='+after;
     }
-    else if (before)
-    {
-        url += '&before='+before;
-    }
+    
      const resp = await axios.get(url);
     return resp.data; 
 }

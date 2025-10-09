@@ -43,6 +43,14 @@ function App() {
         sessionStorage.setItem("artists_nextPage","");
         sessionStorage.setItem("artists_cursorHistory",JSON.stringify([]));
         sessionStorage.setItem("artists_hasNext",JSON.stringify(false));
+
+        sessionStorage.setItem("artists_mode","normal");
+        sessionStorage.setItem("artists_searchType",'library');
+        sessionStorage.setItem("artists_searchTerm",'');
+        sessionStorage.setItem("artists_normal_pageNum",1);
+        sessionStorage.setItem("artists_library_search_pageNum",1);
+        sessionStorage.setItem("artists_spotify_search_pageNum",1);
+
         navigate("/library/songs");
    }
     // if (loginResp !== 'success') return;

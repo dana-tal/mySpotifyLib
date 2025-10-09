@@ -5,12 +5,14 @@ function ArtistListItem(props) {
   
   const MAX_TITLE_LENGTH = import.meta.env.VITE_MAX_TITLE_LENGTH;
 
-  const image_obj = props.item.images[1];
+  const my_obj = props.item.artist ? props.item.artist : props.item;
+
+  const image_obj = my_obj.images[1];
 
     return (
-            <ListItemContainer image_obj={image_obj}  title={shortenString(props.item.name,MAX_TITLE_LENGTH)}>
+            <ListItemContainer image_obj={image_obj}  title={shortenString(my_obj.name,MAX_TITLE_LENGTH)}>
             {
-                  `Followers:${props.item.followers.total}`
+                  `Followers:${my_obj.followers.total}`
             }                            
             </ListItemContainer>
         )   
