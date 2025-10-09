@@ -50,7 +50,7 @@ function SongPage() {
     <>        
            <div className="song-frame ">
             <div className="song-grid-table">
-                <div className="cell" ><img src={img_obj.url} alt={songInfo.album.name} /></div>
+                <div className="cell" ><img src={img_obj?.url} alt={songInfo.album.name} /></div>
                   <div className="cell" ><MouseHoverPopover hoverText={songInfo.name}><span className="song-font">Song:</span><span className="song-name song-font"> {shortenString(songInfo.name,21) }</span></MouseHoverPopover></div>
                   <div className="cell"><span className="song-album-name song-font">Album Name: </span></div>
                   <div className="cell"><Link to={`/library/albums/${songInfo.album.id}`}><MouseHoverPopover hoverText={songInfo.album.name}><span className="song-album-name song-font">{shortenString(songInfo.album.name,21)}</span></MouseHoverPopover></Link></div>

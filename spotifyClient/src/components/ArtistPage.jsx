@@ -48,7 +48,7 @@ function ArtistPage() {
            <div className="artist-frame">
             <div className="artist-grid-table">
             
-                <div className="artist-cell" ><img src={img_obj.url} alt={artistInfo.name} /></div>
+                <div className="artist-cell" ><img src={img_obj?.url} alt={artistInfo.name} /></div>
                   <div className="artist-cell" >
                     <div style={{ display:"flex", flexDirection:"column" }}>
                        <span>Artist: </span>

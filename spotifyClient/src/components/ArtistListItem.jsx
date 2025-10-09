@@ -9,6 +9,9 @@ function ArtistListItem(props) {
 
   const image_obj = my_obj.images[1];
 
+  console.log("image_obj");
+  console.log(image_obj);
+
     return (
             <ListItemContainer image_obj={image_obj}  title={shortenString(my_obj.name,MAX_TITLE_LENGTH)}>
             {

@@ -46,7 +46,7 @@ function AlbumPage() {
            <div className="album-frame">
             <div className="album-grid-table">
              
-                <div className="album-cell" >{<img src={img_obj.url} alt={albumInfo.name} className="album-image"/> }</div>
+                <div className="album-cell" >{<img src={img_obj?.url} alt={albumInfo.name} className="album-image"/> }</div>
                   <div className="album-cell">
                     <div style={{ display:"flex", flexDirection:"column" }}>
                         <span className="album-font">Album: </span>

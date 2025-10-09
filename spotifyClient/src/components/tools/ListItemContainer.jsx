@@ -8,7 +8,7 @@ function ListItemContainer({image_obj,title,children}) {
   
     return (     
         <Paper elevation={SHADOW_INTENSITY} className="list-item-container">
-                <div style={{ paddingTop:"5px", paddingBottom:"3px" }}> <img src={image_obj.url} style={{height:"150px" ,width:"`150px"}}  /></div>  
+                <div style={{ paddingTop:"5px", paddingBottom:"3px" }}> <img src={image_obj?.url} style={{height:"150px" ,width:"`150px"}} alt={title} /></div>  
                 <div className="list-item-content">
                 <div style={{marginBottom:"3px" }}>{ title}</div>
                     <div>
