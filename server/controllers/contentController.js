@@ -140,6 +140,52 @@ const getAlbumSearchResults = async (req,res) => {
 
 }
 
+// controllers/ContentController.js
+
+const getSingleSongInfo = async (req, res) => {
+  try {
+    const songId = req.params.songId;
+    const accessToken = req.session.access_token;
+    const refreshToken = req.session.refresh_token;
+
+    // Step 1: Fetch the base Spotify song info 
+    const resp = await spotifyService.getSingleSong(accessToken, songId);
+    const main_artist = resp.data.artists?.[0]?.name;
+    if (!main_artist) {
+      return res.status(404).json({ error: "Artist not found for this track." });
+    }
+
+    // Step 2: Run all independent API calls in parallel
+    const [videoId, sdkTokenRes, moreSongs, topTen] = await Promise.all([
+      // YouTube: get matching video
+      youTubeService.getYouTubeVideoId(main_artist, resp.data.name),
+
+      // Spotify: get SDK playback token
+      spotifyService.fetchSDKToken(refreshToken),
+
+      // AI: get 5 more songs by the artist (excluding current one)
+      aiService.getMoreSongsOfArtist(main_artist, 5, resp.data.name),
+
+      // AI: get artist's top 10 songs
+      aiService.getTopTenSongsOfArtist(main_artist),
+    ]);
+
+    // Step 3: Attach results to response
+    resp.data.youTubeVideoId = videoId;
+    resp.data.accessToken = sdkTokenRes.data.access_token;
+    resp.data.more_songs = moreSongs;
+    resp.data.top_ten = topTen;
+
+    // Step 4: Send result to client
+    res.json(resp.data);
+  } catch (err) {
+    errLogger.error(`getSingleSongInfo failed: ${err.message}`, { stack: err.stack });
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+
+/*
 const getSingleSongInfo = async (req,res) =>{
 
     try
@@ -176,6 +222,7 @@ const getSingleSongInfo = async (req,res) =>{
         return res.status(500).json({ error: err.message });
     }
 }
+    */
 
 const getSingleAlbumInfo = async (req,res) =>{
     try
