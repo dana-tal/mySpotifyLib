@@ -37,12 +37,12 @@ console.log("in SearchBox, search_type="+searchType);
                         name="search_type"    
                         id ="search_type"      
                         defaultValue={searchType}                              
-                        
+                        row
                     >
                         <FormControlLabel value="library" sx={{ padding:"1px"}} control={<Radio />} label="This Library" />
                         <FormControlLabel value="spotify" sx={{ padding:"1px"}} control={<Radio />} label="Spotify" />
                     </RadioGroup>
-                    <TextField  required id="search_text" name="search_text" label="Enter search words" variant="outlined" defaultValue={searchTerm} />
+                    <TextField sx={{ marginTop:"5px"}} required id="search_text" name="search_text" label="Enter search words" variant="outlined" defaultValue={searchTerm} />
                     <Button type="submit" variant="contained" size="medium">Submit</Button>
             </FormControl>
         </form>

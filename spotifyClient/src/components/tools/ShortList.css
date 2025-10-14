@@ -1,0 +1,13 @@
+
+.short-list
+{
+  border:3px dashed #513b1c;
+  background-color:#FFF0DB; 
+  padding-left:35px;
+  color: #513b1c;
+  box-sizing: border-box;
+}
+
+div.short-list > ul {
+  list-style-type: square !important;
+}

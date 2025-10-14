@@ -1,8 +1,10 @@
 import { useParams} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import { getSingleSong} from '../utils/requests';
-import { isMobile,shortenString } from '../utils/genFuncs';
+import { shortenString } from '../utils/genFuncs';
 import MouseHoverPopover from './tools/MouseHoverPopover';
+import MouseHoverList from './tools/MouseHoverList';
+import ShortList from './tools/ShortList';
 
 import Loader from './tools/Loader';
 import "./SongPage.css";
@@ -10,12 +12,17 @@ import {Link} from 'react-router-dom';
 import YouTubePlayer from './tools/YouTubePlayer';
 import SpotifyPlayer from './tools/SpotifyPlayer';
 
+
 function SongPage() {
 
     const paramsObj = useParams();
     const [songInfo, setSongInfo] = useState({});
+    const [displayTop,setDisplayTop] = useState(false);
 
-
+    const handleClick = ()=>{
+          
+      setDisplayTop( (prevDisplayTop)=>{  return !prevDisplayTop; })
+    }
 
     useEffect( ()=>{
 
@@ -24,6 +31,8 @@ function SongPage() {
          try
          {
           const resp = await getSingleSong(songId);
+          console.log("resp:");
+          console.log(resp);
           setSongInfo(resp);
          }
          catch (err) 
@@ -39,18 +48,25 @@ function SongPage() {
 
     
      if (!songInfo.album) return <Loader />;
-     const is_mobile  =  isMobile();
-     console.log("is mobile:");
-     console.log(is_mobile);
-
+    
      const img_obj = songInfo.album.images[1]; 
+
+     
   
   return (
 
     <>        
            <div className="song-frame ">
             <div className="song-grid-table">
-                <div className="cell" ><img src={img_obj?.url} alt={songInfo.album.name} /></div>
+                <div className="cell" >
+                
+                   { displayTop? <div onClick={handleClick}><ShortList title="Top Ten Songs" listItems={songInfo.top_ten} width={img_obj.width} height={img_obj.height} /></div> :
+                        <MouseHoverList list={songInfo.more_songs} >
+                          <img src={img_obj?.url} alt={songInfo.album.name} onClick={handleClick } /> 
+                        </MouseHoverList>
+                   }
+                 
+      </div>            
                   <div className="cell" ><MouseHoverPopover hoverText={songInfo.name}><span className="song-font">Song:</span><span className="song-name song-font"> {shortenString(songInfo.name,21) }</span></MouseHoverPopover></div>
                   <div className="cell"><span className="song-album-name song-font">Album Name: </span></div>
                   <div className="cell"><Link to={`/library/albums/${songInfo.album.id}`}><MouseHoverPopover hoverText={songInfo.album.name}><span className="song-album-name song-font">{shortenString(songInfo.album.name,21)}</span></MouseHoverPopover></Link></div>

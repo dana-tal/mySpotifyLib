@@ -1,0 +1,77 @@
+import 'dotenv/config';
+import { ChatOpenAI } from '@langchain/openai';
+import { ChatPromptTemplate } from '@langchain/core/prompts'; 
+
+const model = new ChatOpenAI({
+  temperature: 0.8,
+  openAIApiKey: process.env.OPENAI_API_KEY,
+});
+
+const getMoreSongsOfArtist = async (artistName,songsNum, excludeSong)=>{
+
+    const prompt_template = ChatPromptTemplate.fromMessages([
+    ["system", "You are a music expert who is well-versed in famous singers, popular songs, and music albums."],
+    ["human", `Return exactly {songsNum} song names by {artistName}, excluding "{excludeSong}". 
+        Each of the songs must be from a different album.
+Respond only with a JSON array of song names, no explanations.`]
+  ]);
+
+    const formatted_prompt = await prompt_template.formatMessages({ artistName,songsNum,excludeSong });
+    const response = await model.invoke(formatted_prompt);
+    try 
+    {
+        let content = response.content.trim();
+        content = content.replace(/```json\s*/i, "").replace(/```$/, "").trim();
+
+        const songs_list = JSON.parse(content);
+        return songs_list;
+        
+    } 
+    catch (err) 
+    {
+        console.error("Error parsing model response:", response.content);
+        return [];
+    }
+    //const response = await model.invoke(formatted_prompt);
+    //return response.content;
+
+}
+
+const getTopTenSongsOfArtist = async (artistName) =>{
+
+
+      const prompt_template = ChatPromptTemplate.fromMessages([
+    ["system", "You are a music expert who is well-versed in famous singers, popular songs, and music albums."],
+     ["human", `Return exactly 10 top most popular song names by {artistName}.
+Each of the songs must be from a different album.
+Respond only with a JSON array of song names, no explanations.`]
+
+  ]);
+
+   const formatted_prompt = await prompt_template.formatMessages({ artistName});
+    const response = await model.invoke(formatted_prompt);
+
+    try 
+    {
+        let content = response.content.trim();
+        content = content.replace(/```json\s*/i, "").replace(/```$/, "").trim();
+
+        const songs_list = JSON.parse(content);
+        return songs_list;
+        
+    } 
+    catch (err) 
+    {
+        console.error("Error parsing model response:", response.content);
+        return [];
+    }
+  //  return response.content; 
+
+}
+
+
+export default
+{
+    getMoreSongsOfArtist,
+    getTopTenSongsOfArtist 
+}

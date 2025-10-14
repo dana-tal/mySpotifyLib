@@ -253,9 +253,9 @@ const getArtistsList = async (accessToken, limit,after=null,before=null) =>
        url.searchParams.set("before",before);
     }
 
-    console.log("getArtistsList");
-    console.log("url:");
-    console.log(url);
+   // console.log("getArtistsList");
+   // console.log("url:");
+   // console.log(url);
 
    
     const artistsResponse = await axios.get(url, {
@@ -264,8 +264,8 @@ const getArtistsList = async (accessToken, limit,after=null,before=null) =>
           }
         });
 
-    console.log("response");
-    console.log(artistsResponse);
+    // console.log("response");
+    //console.log(artistsResponse);
     
     return artistsResponse;
 }

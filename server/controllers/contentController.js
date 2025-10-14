@@ -3,6 +3,7 @@ import errLogger from '../utils/errorLogger.js';
 import infoLogger from '../utils/infoLogger.js';
 import spotifyService from '../services/spotifyService.js';
 import youTubeService from '../services/youTubeService.js';
+import aiService from '../services/aiService.js';
 
 
 import dotenv from 'dotenv';
@@ -39,10 +40,10 @@ const getSongSearchResults = async (req,res) =>{
         page = parseInt(page);
         limit = parseInt(limit);
 
-        console.log("page="+page);
-        console.log("limit="+limit);
-        console.log("query_text="+query_text);
-        console.log("search_type="+search_type);
+    //    console.log("page="+page);
+    //  console.log("limit="+limit);
+    //    console.log("query_text="+query_text);
+    //    console.log("search_type="+search_type);
 
         let resp;
         
@@ -77,9 +78,9 @@ const getArtistSearchResults = async (req,res) =>{
         page = parseInt(page);
         limit = parseInt(limit);
 
-        console.log("page="+page);
-        console.log("query_text="+query_text);
-        console.log("search_type="+search_type);
+       // console.log("page="+page);
+       // console.log("query_text="+query_text);
+       // console.log("search_type="+search_type);
 
         let resp;
 
@@ -155,12 +156,17 @@ const getSingleSongInfo = async (req,res) =>{
         const resp2 = await spotifyService.fetchSDKToken(req.session.refresh_token);
         resp.data.accessToken = resp2.data.access_token;
 
-    //   console.log("song access token:");
-      //  console.log(resp.data.accessToken);
 
-        // response.data.access_token 
-      // console.log("resp.data=");
-       // console.log(resp.data);
+       const main_artist = resp.data.artists[0].name;
+     // console.log("main_artist: "+main_artist);
+
+
+      resp.data.more_songs =  await aiService.getMoreSongsOfArtist(main_artist,5,resp.data.name);
+
+      resp.data.top_ten  =  await aiService.getTopTenSongsOfArtist(main_artist);
+       
+    //  console.log("data:");
+     // console.log( resp.data);
 
         res.json( resp.data);
     }
