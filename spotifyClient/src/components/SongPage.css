@@ -22,6 +22,16 @@
         justify-content: center;   /* horizontal centering */
         box-sizing: border-box;    /* include padding in width/height */
     }
+
+
+    
+.cell.full-width {
+  grid-column: 1 / -1; /* makes it span across both columns */
+  text-align: center;  /* optional */
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
   
    /* Striping rows */
 .cell:nth-child(4n-3),
@@ -65,6 +75,31 @@
 .song-font
 {
     font-size:40px;
+}
+
+
+.list-item-link
+{
+    text-decoration:none;
+   /* display:block; */
+}
+
+.spotifyTopContainer {
+  display: flex;
+  flex-wrap: wrap;          /* allow wrapping to new rows */
+  justify-content: center;  /* center items horizontally */
+  gap: 16px;                /* space between items */
+  padding: 16px;
+}
+
+.spotifyTopItem {
+  width: 155px;             /* fixed width */
+  height: 155px;            /* fixed height */
+  box-sizing: border-box;
+  display: flex;             /* center content inside */
+  align-items: center;
+  justify-content: center;
+  border: 1px solid brown;
 }
 
 

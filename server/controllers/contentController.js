@@ -156,7 +156,7 @@ const getSingleSongInfo = async (req, res) => {
     }
 
     // Step 2: Run all independent API calls in parallel
-    const [videoId, sdkTokenRes, moreSongs, topTen] = await Promise.all([
+    const [videoId, sdkTokenRes, moreSongs, topTen, spotifyTop] = await Promise.all([
       // YouTube: get matching video
       youTubeService.getYouTubeVideoId(main_artist, resp.data.name),
 
@@ -168,13 +168,26 @@ const getSingleSongInfo = async (req, res) => {
 
       // AI: get artist's top 10 songs
       aiService.getTopTenSongsOfArtist(main_artist),
+
+      // Spotify : get artists top tracks 
+      spotifyService.getSingleArtistTopTracks(accessToken, resp.data.artists[0].id)
     ]);
+
+   // console.log(spotifyTopTen.data.tracks);
+
+   let spotifyTopTracks = spotifyTop.data.tracks.filter ( (item)=>{ return item.name !== resp.data.name } )
+
+
+   //console.log("total:"+spotifyTopTracks.length);
+   //console.log(spotifyTopTracks);
+
 
     // Step 3: Attach results to response
     resp.data.youTubeVideoId = videoId;
     resp.data.accessToken = sdkTokenRes.data.access_token;
     resp.data.more_songs = moreSongs;
     resp.data.top_ten = topTen;
+    resp.data.spotifyTopTracks = spotifyTopTracks;
 
     // Step 4: Send result to client
     res.json(resp.data);
@@ -184,45 +197,6 @@ const getSingleSongInfo = async (req, res) => {
   }
 };
 
-
-/*
-const getSingleSongInfo = async (req,res) =>{
-
-    try
-    {
-        const songId = req.params.songId;
-
-        const resp = await spotifyService.getSingleSong(req.session.access_token,songId);
-        const videoId = await youTubeService.getYouTubeVideoId(resp.data.artists[0].name, resp.data.name);       
-       // console.log("videoId: "+videoId);
-        resp.data.youTubeVideoId = videoId;
-
-       // resp.data.accessToken = req.session.access_token;
-
-        const resp2 = await spotifyService.fetchSDKToken(req.session.refresh_token);
-        resp.data.accessToken = resp2.data.access_token;
-
-
-       const main_artist = resp.data.artists[0].name;
-     // console.log("main_artist: "+main_artist);
-
-
-      resp.data.more_songs =  await aiService.getMoreSongsOfArtist(main_artist,5,resp.data.name);
-
-      resp.data.top_ten  =  await aiService.getTopTenSongsOfArtist(main_artist);
-       
-    //  console.log("data:");
-     // console.log( resp.data);
-
-        res.json( resp.data);
-    }
-    catch (err) 
-    {
-        errLogger.error(`getSingleSongInfo failed: ${err.message}`, { stack: err.stack });                
-        return res.status(500).json({ error: err.message });
-    }
-}
-    */
 
 const getSingleAlbumInfo = async (req,res) =>{
     try

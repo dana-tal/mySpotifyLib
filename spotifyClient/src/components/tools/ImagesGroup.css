@@ -1,0 +1,28 @@
+
+
+.imagesContainer {
+  display: flex;
+  flex-wrap: wrap;          /* allow wrapping to new rows */
+  justify-content: center;  /* center items horizontally */
+  gap: 16px;                /* space between items */
+  padding: 16px;
+}
+
+
+.imageItem {
+  box-sizing: border-box;
+  display: flex;             /* center content inside */
+  align-items: center;
+  justify-content: center;
+  border: 1px solid brown;
+  
+}
+
+
+.list-image-link
+{
+    text-decoration:none;
+      cursor: pointer;
+}
+
+

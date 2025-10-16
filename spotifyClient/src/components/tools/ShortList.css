@@ -6,6 +6,8 @@
   padding-left:35px;
   color: #513b1c;
   box-sizing: border-box;
+  overflow-y: auto;   /* shows scrollbar only when content is taller */
+  overflow-x: hidden; /* hides horizontal scrollbar */
 }
 
 div.short-list > ul {

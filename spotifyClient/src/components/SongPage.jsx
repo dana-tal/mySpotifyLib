@@ -11,6 +11,8 @@ import "./SongPage.css";
 import {Link} from 'react-router-dom';
 import YouTubePlayer from './tools/YouTubePlayer';
 import SpotifyPlayer from './tools/SpotifyPlayer';
+import SongListItem from './SongListItem';
+import ImagesGroup from './tools/ImagesGroup';
 
 
 function SongPage() {
@@ -51,7 +53,8 @@ function SongPage() {
     
      const img_obj = songInfo.album.images[1]; 
 
-     
+     console.log("Top Tracks");
+     console.log( songInfo.spotifyTopTracks);
   
   return (
 
@@ -96,7 +99,29 @@ function SongPage() {
                   <div className="cell">      
                      <YouTubePlayer videoId={songInfo.youTubeVideoId} />
                   </div> 
-                   
+
+
+                  <div className="cell full-width ">
+                     <ImagesGroup list={songInfo.spotifyTopTracks} itemType="song" />   
+                    {/*    
+                     <div className="spotifyTopContainer"> 
+                       { songInfo.spotifyTopTracks.length > 0 &&
+                            songInfo.spotifyTopTracks.map(item => {
+                              const my_obj = item.track ? item.track : item;
+                            
+                              return (
+                                <div className="spotifyTopItem">
+                                <Link key={my_obj.id} to={`/library/songs/${my_obj.id}`} className="list-item-link">
+                                     <img src={my_obj.album.images[1].url} alt={my_obj.name} style={{ width:"150px", height:"150px"}} />
+                                </Link>
+                                </div>
+                              );
+                            })
+                          }
+                    </div>
+                    */}
+                    
+                  </div> 
             </div>
             
            

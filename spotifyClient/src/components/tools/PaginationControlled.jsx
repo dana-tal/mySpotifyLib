@@ -9,7 +9,7 @@ export default function PaginationControlled({ totalPages = 20, page, pageChange
   };
 
   return (
-    <Stack direction="column" gap={2} flexWrap="wrap" sx={{ mt: 1 }} justifyContent="center">
+    <Stack direction="column" gap={2} flexWrap="wrap" sx={{ mt: 1 , mb:1 }} justifyContent="center">
       <Typography>Page: {page}</Typography>
       <Stack direction="row" gap={2} flexWrap="wrap" sx={{ mt: 1 }} justifyContent="center">
         <Pagination count={totalPages} page={page} onChange={handleChange} color="primary" />
