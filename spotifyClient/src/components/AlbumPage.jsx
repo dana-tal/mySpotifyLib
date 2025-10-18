@@ -3,17 +3,24 @@ import {useEffect, useState} from "react";
 import { getSingleAlbum} from '../utils/requests';
 import {  shortenString } from '../utils/genFuncs';
 import MouseHoverPopover from './tools/MouseHoverPopover';
+import MouseHoverList from './tools/MouseHoverList';
 
 import Loader from './tools/Loader';
 import "./AlbumPage.css";
 import {Link} from 'react-router-dom';
+import ShortList from './tools/ShortList';
 
 function AlbumPage() {
 
     const paramsObj = useParams();
     const [albumInfo, setAlbumInfo] = useState({});
 
+    const [displayTop,setDisplayTop] = useState(false); // a boolean flag - display or don't display the top ten albums of this artist 
 
+    const handleClick = ()=>{
+          
+      setDisplayTop( (prevDisplayTop)=>{  return !prevDisplayTop; })
+    }
 
     useEffect( ()=>{
 
@@ -46,7 +53,18 @@ function AlbumPage() {
            <div className="album-frame">
             <div className="album-grid-table">
              
-                <div className="album-cell" >{<img src={img_obj?.url} alt={albumInfo.name} className="album-image"/> }</div>
+                <div className="album-cell" >
+                  {
+                    displayTop? <div onClick={handleClick}><ShortList title="Top Ten Albums" listItems={albumInfo.top_ten_albums} width={img_obj.width} height={img_obj.height} /></div> :
+                    <MouseHoverList list={albumInfo.more_albums} title={`More Albums of ${albumInfo.artists[0].name}`}>
+                      <img src={img_obj?.url} alt={albumInfo.name} className="album-image" onClick={handleClick }/> 
+                    </MouseHoverList>
+                  }
+                  
+                </div>
+                {/*  <MouseHoverList list={songInfo.more_songs} >
+                                          <img src={img_obj?.url} alt={songInfo.album.name} onClick={handleClick } /> 
+                                        </MouseHoverList> */}
                   <div className="album-cell">
                     <div style={{ display:"flex", flexDirection:"column" }}>
                         <span className="album-font">Album: </span>

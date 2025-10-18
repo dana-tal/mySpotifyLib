@@ -2,7 +2,7 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import {useState,useEffect} from "react";
 
-export default function MouseHoverList({list,children}) {
+export default function MouseHoverList({list,title="",children}) {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handlePopoverOpen = (event) => {
@@ -43,6 +43,7 @@ export default function MouseHoverList({list,children}) {
         disableRestoreFocus
       >
         <Typography sx={{ p: 1 }}>
+            { title && <h4>{title}</h4>}
             <ul style={{ paddingRight:'10px'}}>
                         { list.map((item)=>{ return <li key={item}>{item}</li>}) }
             </ul>

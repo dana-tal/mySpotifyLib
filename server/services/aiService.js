@@ -7,6 +7,64 @@ const model = new ChatOpenAI({
   openAIApiKey: process.env.OPENAI_API_KEY,
 });
 
+
+const getMoreAlbumsOfArtist =  async (artistName,albumsNum, excludeAlbum)=>{
+
+  const prompt_template = ChatPromptTemplate.fromMessages([
+    ["system", "You are a music expert who is well-versed in famous singers, popular songs, and music albums."],
+    ["human", `Return exactly {albumsNum} album names by {artistName}, excluding "{excludeAlbum}". 
+        The albums list should not contain duplicates. Respond only with a JSON array of album names, no explanations.`]
+  ]);
+
+  const formatted_prompt = await prompt_template.formatMessages({ artistName,albumsNum,excludeAlbum });
+  const response = await model.invoke(formatted_prompt);
+
+   try 
+    {
+        let content = response.content.trim();
+        content = content.replace(/```json\s*/i, "").replace(/```$/, "").trim();
+
+        const albums_list = JSON.parse(content);
+        return albums_list;
+        
+    } 
+    catch (err) 
+    {
+        console.error("getMoreAlbumsOfArtist, Error parsing model response:", response.content);
+        return [];
+    }
+
+}
+
+const getTopTenAlbumsOfArtist = async (artistName) =>{
+
+     const prompt_template = ChatPromptTemplate.fromMessages([
+    ["system", "You are a music expert who is well-versed in famous singers, popular songs, and music albums."],
+     ["human", `Return exactly 10 top most popular album names by {artistName}.
+      Avoid duplicate albums. Respond only with a valid JSON array of album names, like this:
+      ["Album 1", "Album 2", ...] .Do NOT include any object fields, keys, or explanations..`]
+  ]);
+
+    const formatted_prompt = await prompt_template.formatMessages({ artistName});
+    const response = await model.invoke(formatted_prompt);
+
+    try 
+    {
+        let content = response.content.trim();
+        content = content.replace(/```json\s*/i, "").replace(/```$/, "").trim();
+
+        const albums_list = JSON.parse(content);
+        return albums_list;
+        
+    } 
+    catch (err) 
+    {
+        console.error("getTopTenAlbumsOfArtist, Error parsing model response:", response.content);
+        return [];
+    }
+
+}
+
 const getMoreSongsOfArtist = async (artistName,songsNum, excludeSong)=>{
 
     const prompt_template = ChatPromptTemplate.fromMessages([
@@ -29,7 +87,7 @@ Respond only with a JSON array of song names, no explanations.`]
     } 
     catch (err) 
     {
-        console.error("Error parsing model response:", response.content);
+        console.error(" getMoreSongsOfArtist, Error parsing model response:", response.content);
         return [];
     }
     //const response = await model.invoke(formatted_prompt);
@@ -73,5 +131,7 @@ Respond only with a JSON array of song names, no explanations.`]
 export default
 {
     getMoreSongsOfArtist,
-    getTopTenSongsOfArtist 
+    getTopTenSongsOfArtist,
+    getMoreAlbumsOfArtist,
+    getTopTenAlbumsOfArtist
 }

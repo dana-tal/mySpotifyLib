@@ -203,6 +203,17 @@ const getSingleAlbumInfo = async (req,res) =>{
     {
         const albumId = req.params.albumId;
         const resp = await spotifyService.getSingleAlbum(req.session.access_token,albumId);
+
+        const main_artist = resp.data.artists[0].name;
+        //console.log ("data:");
+        //console.log(resp.data);
+        const [ moreAlbums, topTenAlbums ] = await Promise.all([ aiService.getMoreAlbumsOfArtist(main_artist,5,resp.data.name),
+                        aiService.getTopTenAlbumsOfArtist(main_artist)
+        ]);
+      
+       resp.data.more_albums = moreAlbums;
+       resp.data.top_ten_albums = topTenAlbums;
+        
         res.json( resp.data);
     }
     catch(err)

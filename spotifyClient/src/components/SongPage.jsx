@@ -19,7 +19,7 @@ function SongPage() {
 
     const paramsObj = useParams();
     const [songInfo, setSongInfo] = useState({});
-    const [displayTop,setDisplayTop] = useState(false);
+    const [displayTop,setDisplayTop] = useState(false); // a boolean flag - display or don't display the top ten songs of this artist 
 
     const handleClick = ()=>{
           
@@ -64,7 +64,7 @@ function SongPage() {
                 <div className="cell" >
                 
                    { displayTop? <div onClick={handleClick}><ShortList title="Top Ten Songs" listItems={songInfo.top_ten} width={img_obj.width} height={img_obj.height} /></div> :
-                        <MouseHoverList list={songInfo.more_songs} >
+                        <MouseHoverList list={songInfo.more_songs} title={`More Songs Of ${songInfo.artists[0].name}`}>
                           <img src={img_obj?.url} alt={songInfo.album.name} onClick={handleClick } /> 
                         </MouseHoverList>
                    }
@@ -102,25 +102,7 @@ function SongPage() {
 
 
                   <div className="cell full-width ">
-                     <ImagesGroup list={songInfo.spotifyTopTracks} itemType="song" />   
-                    {/*    
-                     <div className="spotifyTopContainer"> 
-                       { songInfo.spotifyTopTracks.length > 0 &&
-                            songInfo.spotifyTopTracks.map(item => {
-                              const my_obj = item.track ? item.track : item;
-                            
-                              return (
-                                <div className="spotifyTopItem">
-                                <Link key={my_obj.id} to={`/library/songs/${my_obj.id}`} className="list-item-link">
-                                     <img src={my_obj.album.images[1].url} alt={my_obj.name} style={{ width:"150px", height:"150px"}} />
-                                </Link>
-                                </div>
-                              );
-                            })
-                          }
-                    </div>
-                    */}
-                    
+                     <ImagesGroup list={songInfo.spotifyTopTracks} itemType="song" />                                         
                   </div> 
             </div>
             
