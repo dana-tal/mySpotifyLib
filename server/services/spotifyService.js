@@ -236,6 +236,21 @@ const getSingleArtistTopTracks = async( accessToken, artistId) =>
     return topTracksResponse; 
 }
 
+
+const getArtistMoreAlbums = async (accessToken, artistId,limit) =>
+{
+    const filter_obj = new URLSearchParams({ limit:limit, offset:0});
+    const url = process.env.SPOTIFY_SINGLE_ARTIST_ENTRY_POINT+'/'+artistId+'/albums'+'?'+filter_obj;
+
+     const moreAlbumsResponse = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+    return moreAlbumsResponse; 
+  
+}
+
 const getAlbumsGroup = async (accessToken, limit, page)=>
 {
     const offset = page * limit;
@@ -336,6 +351,7 @@ export default {
   getSingleAlbum,
   getSingleArtist,
   getSingleArtistTopTracks,
+  getArtistMoreAlbums,
   searchMyLibSongs,
   getSpotifySearchResult,
   searchMyLibAlbums,

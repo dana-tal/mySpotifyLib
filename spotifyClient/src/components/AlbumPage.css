@@ -30,6 +30,13 @@
         box-sizing: border-box;    /* include padding in width/height */
     }
 
+.album-cell.full-width {
+  grid-column: 1 / -1; /* makes it span across both columns */
+  text-align: center;  /* optional */
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
   
    /* Striping rows */
 .album-cell:nth-child(4n-3),
@@ -48,7 +55,7 @@
 .album-font
 {
     font-family:Arial;
-    font-size: 40px;
+    font-size: 16px;
 }
 
 .album-cell ul
@@ -69,10 +76,10 @@
 
 
 @media (max-width: 374px) {
-    .album-font
+   /* .album-font
     {
         font-size:19px;
-    }
+    } */
 
     .album-grid-table {
       grid-template-columns: 1fr ; 
@@ -89,11 +96,11 @@
 
 @media (min-width:375px) and  (max-width: 767px) {
 
-   
+   /*
     .album-font
     {
         font-size:21px;
-    }
+    } */
 
     .album-grid-table {
       grid-template-columns: 1fr ; 
@@ -116,20 +123,20 @@
        
     }
 
-    .album-font
+/*    .album-font
     {
         font-size:27px;
-    }
+    } */
 
 }
 
 @media (min-width:912px) and  (max-width: 1023px) {
    
-    .album-font
+  /*  .album-font
     {
         font-size:19px;
     }
-    
+    */
 }
 
 
@@ -140,9 +147,9 @@
        
     }
   
-    .album-font
+ /*   .album-font
     {
         font-size:29px;
     }
-    
+   */ 
 }
