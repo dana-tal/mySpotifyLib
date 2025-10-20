@@ -13,7 +13,8 @@ const getMoreAlbumsOfArtist =  async (artistName,albumsNum,  excludeAlbum = "")=
   const prompt_template = ChatPromptTemplate.fromMessages([
     ["system", "You are a music expert who is well-versed in famous singers, popular songs, and music albums."],
     ["human", `Return exactly {albumsNum} album names by {artistName}, excluding "{excludeClause}". 
-        The albums list should not contain duplicates. Respond only with a JSON array of album names, no explanations.`]
+       Avoid duplicate albums. Respond only with a valid JSON array of album names, like this:
+      ["Album 1", "Album 2", ...] .Do NOT include any object fields, keys, or explanations. If nothing is found return an empty array.`]
   ]);
 
   const excludeClause =  excludeAlbum ? `, excluding "${excludeAlbum}"` : "";
@@ -44,7 +45,7 @@ const getTopTenAlbumsOfArtist = async (artistName) =>{
     ["system", "You are a music expert who is well-versed in famous singers, popular songs, and music albums."],
      ["human", `Return exactly 10 top most popular album names by {artistName}.
       Avoid duplicate albums. Respond only with a valid JSON array of album names, like this:
-      ["Album 1", "Album 2", ...] .Do NOT include any object fields, keys, or explanations..`]
+      ["Album 1", "Album 2", ...] .Do NOT include any object fields, keys, or explanations.If nothing is found return an empty array.`]
   ]);
 
     const formatted_prompt = await prompt_template.formatMessages({ artistName});
@@ -73,7 +74,7 @@ const getMoreSongsOfArtist = async (artistName,songsNum, excludeSong)=>{
     ["system", "You are a music expert who is well-versed in famous singers, popular songs, and music albums."],
     ["human", `Return exactly {songsNum} song names by {artistName}, excluding "{excludeSong}". 
         Each of the songs must be from a different album.
-Respond only with a JSON array of song names, no explanations.`]
+Respond only with a JSON array of song names, no explanations.If nothing is found return an empty array.`]
   ]);
 
     const formatted_prompt = await prompt_template.formatMessages({ artistName,songsNum,excludeSong });
@@ -105,7 +106,7 @@ const getTopTenSongsOfArtist = async (artistName) =>{
      ["human", `Return exactly 10 top most popular song names by {artistName}.
 Each of the songs must be from a different album.
 Respond only with a valid JSON array of album names, like this:
-      ["Album 1", "Album 2", ...] .Do NOT include any object fields, keys, or explanations...`]
+      ["Album 1", "Album 2", ...] .Do NOT include any object fields, keys, or explanations.If nothing is found return an empty array.`]
 
   ]);
 
