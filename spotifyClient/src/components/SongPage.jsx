@@ -33,13 +33,11 @@ function SongPage() {
          try
          {
           const resp = await getSingleSong(songId);
-          console.log("resp:");
-          console.log(resp);
           setSongInfo(resp);
          }
          catch (err) 
          {
-            console.error('Error fetching single song data', err);
+            console.error('fetchSong, Error fetching single song data', err);
           }
       }
 
@@ -53,8 +51,7 @@ function SongPage() {
     
      const img_obj = songInfo.album.images[1]; 
 
-     console.log("Top Tracks");
-     console.log( songInfo.spotifyTopTracks);
+     
   
   return (
 

@@ -43,24 +43,16 @@ const getSingleSong = async (songId) =>{
 }
 
 const getSingleAlbum = async (albumId) =>{
-    console.log("albumId="+albumId);
     const url = DOMAIN+import.meta.env.VITE_ALBUMS_ENTRY_POINT+albumId;
-    console.log("url="+url);
      const resp = await axios.get(url);
-     console.log("resp:");
-     console.log(resp);
-
+   
     return resp.data; 
 }
 
 const getSingleArtist = async (artistId) =>{
-    console.log("artistId="+artistId);
     const url = DOMAIN+import.meta.env.VITE_ARTISTS_ENTRY_POINT+artistId;
-    console.log("url="+url);
      const resp = await axios.get(url);
-     console.log("resp:");
-     console.log(resp);
-
+   
     return resp.data;
 }
 

@@ -14,10 +14,7 @@ export default function PaginationControlled({totalPages=20,pageChangedHandler,p
     pageChangedHandler(value);
   };
 
-  console.log("In PaginationControlled");
-  console.log(page_key+":");
-  console.log(page);
-
+  
   useEffect(() => {
          sessionStorage.setItem(page_key,page);
 

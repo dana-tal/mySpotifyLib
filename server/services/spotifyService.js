@@ -279,20 +279,13 @@ const getArtistsList = async (accessToken, limit,after=null,before=null) =>
     {
        url.searchParams.set("before",before);
     }
-
-   // console.log("getArtistsList");
-   // console.log("url:");
-   // console.log(url);
-
-   
+ 
     const artistsResponse = await axios.get(url, {
           headers: {
             Authorization: `Bearer ${accessToken}`
           }
         });
 
-    // console.log("response");
-    //console.log(artistsResponse);
     
     return artistsResponse;
 }

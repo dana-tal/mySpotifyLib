@@ -21,7 +21,7 @@ function App() {
     if ( loginResp === 'not_registered')
     {
         setNotRegistered(true);
-        console.log("User Not Registered");
+        
     }
    else if ( loginResp ==='success')
    {

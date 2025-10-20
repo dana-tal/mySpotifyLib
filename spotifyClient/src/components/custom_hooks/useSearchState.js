@@ -26,8 +26,7 @@ export default function useSearchState(storageKey) {
   };
 
   const onSearchChange = (newSearchType, newSearchTerm) => {
-     console.log("newSearchTye="+newSearchType);
-     console.log("newSearchTerm="+newSearchTerm);
+     
     setSearchType(newSearchType);
     setSearchTerm(newSearchTerm);
   };

@@ -19,8 +19,6 @@ const __dirname = path.dirname(__filename);
 
 const isProd = process.env.NODE_ENV === 'production';
 
-// console.log("is prod:");
-// console.log(isProd);
 
  const PORT = process.env.PORT || 3000;
 
@@ -30,20 +28,12 @@ const isProd = process.env.NODE_ENV === 'production';
   app.set('trust proxy', 1);
 }
 
- /*
-app.use(cors({
-  origin: isProd ? 'https://your-production-client-url.com' : 'http://localhost:5173',
-  credentials: true,
-}));
-*/
 
 const corsConfig = {
   origin: process.env.CLIENT_SIDE_URL,
   credentials: true,
 }
 
-//console.log("corsConfig:");
-//console.log(corsConfig);
 
 app.use(cors(corsConfig));
 
@@ -59,8 +49,6 @@ const sessionConfig = {
   }
 };
 
-//console.log("sessionConfig");
-//console.log(sessionConfig);
 
 app.use(session(sessionConfig));
 

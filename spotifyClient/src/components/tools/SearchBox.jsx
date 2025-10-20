@@ -10,18 +10,12 @@ import Button from '@mui/material/Button';
 
 function SearchBox({ onSearchChange ,searchType='library', searchTerm=''}) {
 
-console.log("in SearchBox, search_type="+searchType);
  const handleSubmit = (e)=>{
      e.preventDefault();
      const formData = new FormData(e.target);
 
      const search_type =  formData.get("search_type");
      const search_term = formData.get("search_text");
-    
-     console.log("search_type: "+search_type);
-     console.log("search_text: "+search_term);
-
-     console.log("inside handle submit");
      onSearchChange( search_type,search_term);
  }
 

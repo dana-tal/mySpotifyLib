@@ -34,11 +34,7 @@ function CursorListContainer({  fetchFunc, children, storageKey }) {
   
   });
 
-  //console.log("currentPage:",currentPage);
-  //console.log("nextPage:",nextPage);
- // console.log("cursorHistory: ",cursorHistory);
- // console.log("hasNext: ",hasNext);
-
+  
   const loadPage = async (pageCursor) => {
     const result = await fetchFunc(pageCursor, null);
 

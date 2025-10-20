@@ -18,10 +18,7 @@ const getSongsPage = async (req,res) =>{
         page = parseInt(page);
         limit = parseInt(limit);
           
-       // const search_results = await spotifyService.searchMyLibSongs(req.session.access_token,'home');
-       // console.log("testing search:");
-       // console.log(search_results);
-
+      
         const resp = await spotifyService.getSongsGroup(req.session.access_token,limit,page);
         res.json (resp.data);    
     }
@@ -40,11 +37,7 @@ const getSongSearchResults = async (req,res) =>{
         page = parseInt(page);
         limit = parseInt(limit);
 
-    //    console.log("page="+page);
-    //  console.log("limit="+limit);
-    //    console.log("query_text="+query_text);
-    //    console.log("search_type="+search_type);
-
+    
         let resp;
         
         if (search_type==='library')
@@ -55,10 +48,7 @@ const getSongSearchResults = async (req,res) =>{
         {
            const searchResult  = await spotifyService.getSpotifySearchResult(req.session.access_token,limit,page,'track',query_text);
            resp = searchResult.data.tracks;
-          // console.log("resp");
-           //console.log(resp);
         }
-        console.log("total="+resp.total);
         res.json(resp);
     }
     catch (err) 
@@ -78,10 +68,7 @@ const getArtistSearchResults = async (req,res) =>{
         page = parseInt(page);
         limit = parseInt(limit);
 
-       // console.log("page="+page);
-       // console.log("query_text="+query_text);
-       // console.log("search_type="+search_type);
-
+       
         let resp;
 
         if (search_type==='library')
@@ -92,8 +79,6 @@ const getArtistSearchResults = async (req,res) =>{
         {
            const searchResult  = await spotifyService.getSpotifySearchResult(req.session.access_token,limit,page,'artist',query_text);
            resp = searchResult.data.artists;
-          // console.log("resp");
-          // console.log(resp);
         }
         res.json(resp);
     }
@@ -113,10 +98,7 @@ const getAlbumSearchResults = async (req,res) => {
         page = parseInt(page);
         limit = parseInt(limit);
 
-        console.log("page="+page);
-        console.log("query_text="+query_text);
-        console.log("search_type="+search_type);
-
+       
          let resp;
         
         if (search_type==='library')
@@ -127,8 +109,6 @@ const getAlbumSearchResults = async (req,res) => {
         {
            const searchResult  = await spotifyService.getSpotifySearchResult(req.session.access_token,limit,page,'album',query_text);
            resp = searchResult.data.albums;
-          // console.log("resp");
-          // console.log(resp);
         }
         res.json(resp);
     }
@@ -173,13 +153,9 @@ const getSingleSongInfo = async (req, res) => {
       spotifyService.getSingleArtistTopTracks(accessToken, resp.data.artists[0].id)
     ]);
 
-   // console.log(spotifyTopTen.data.tracks);
-
+  
    let spotifyTopTracks = spotifyTop.data.tracks.filter ( (item)=>{ return item.name !== resp.data.name } )
 
-
-   //console.log("total:"+spotifyTopTracks.length);
-   //console.log(spotifyTopTracks);
 
 
     // Step 3: Attach results to response
@@ -205,20 +181,15 @@ const getSingleAlbumInfo = async (req,res) =>{
         const resp = await spotifyService.getSingleAlbum(req.session.access_token,albumId);
 
         const main_artist = resp.data.artists[0].name;
-        //console.log ("data:");
-        //console.log(resp.data);
         const [ moreAlbums, topTenAlbums , spotifyMoreAlbums ] = await Promise.all([ aiService.getMoreAlbumsOfArtist(main_artist,5,resp.data.name),
                         aiService.getTopTenAlbumsOfArtist(main_artist),
                         spotifyService.getArtistMoreAlbums(req.session.access_token,resp.data.artists[0].id,5)
         ]);
       
-       // console.log("spotify more albums:");
-       // console.log(spotifyMoreAlbums.data.items);
-
+     
        resp.data.more_albums = moreAlbums;
        resp.data.top_ten_albums = topTenAlbums;
        resp.data.spotify_more_albums =  spotifyMoreAlbums.data.items.filter ( (item)=>{ return item.name !== resp.data.name })
-       //resp.data.spotify_more_albums = spotifyMoreAlbums;
         
         res.json( resp.data);
     }
@@ -244,11 +215,6 @@ const getSingleArtistInfo = async (req,res) =>{
                         spotifyService.getArtistMoreAlbums(req.session.access_token,resp.data.id,5)                       
         ]);
 
-        //console.log("more albums:");
-        //console.log(moreAlbums);
-
-       // console.log("top ten songs:");
-        //console.log(topTenSongs);
         
         resp.data.more_albums = moreAlbums;
         resp.data.top_ten_songs = topTenSongs;
@@ -283,11 +249,9 @@ const getAlbumsPage = async (req,res) =>{
 const getArtistsPage = async (req,res)=>{
     try
     {
-       // console.log("getArtistsPage");
         let { after = null, before=null,limit = 50 } = req.query;
         limit = parseInt(limit);
         const resp = await spotifyService.getArtistsList(req.session.access_token,limit,after,before);
-       // console.log(resp.data);
         res.json (resp.data);   
 
     }

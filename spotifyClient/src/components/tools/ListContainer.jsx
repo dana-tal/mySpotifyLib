@@ -41,13 +41,13 @@ function ListContainer({
               skipImmediateFetchRef.current = true; // only skip if pageNum is actually changing
               setPageNum(1);
           }
-      // console.log("Reset pageNum due to search change");
+     
     } else {
       // Restore page number from sessionStorage
       const savedPage = sessionStorage.getItem(pageNumKey);
       if (savedPage) {
         setPageNum(+savedPage);
-        // console.log("Restored pageNum from sessionStorage");
+       
       }
     }
 
@@ -72,8 +72,7 @@ function ListContainer({
 
     const loadData = async () => {
       if (mode === 'normal' || afterSearch) {
-        // console.log("Fetching data:", { mode, searchType, searchTerm, pageNum });
-
+       
         const result = await fetchFunc(pageNum - 1, mode, searchType, searchTerm);
         if (result?.total != null) {
           setTotalPages(Math.ceil(result.total / perPage));
