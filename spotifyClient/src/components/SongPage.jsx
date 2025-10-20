@@ -63,9 +63,9 @@ function SongPage() {
             <div className="song-grid-table">
                 <div className="cell" >
                 
-                   { displayTop? <div onClick={handleClick}><ShortList title="Top Ten Songs" listItems={songInfo.top_ten} width={img_obj.width} height={img_obj.height} /></div> :
+                   { displayTop? <div onClick={handleClick}><ShortList title="Top Ten Songs" listItems={songInfo.top_ten} /></div> :
                         <MouseHoverList list={songInfo.more_songs} title={`More Songs Of ${songInfo.artists[0].name}`}>
-                          <img src={img_obj?.url} alt={songInfo.album.name} onClick={handleClick } /> 
+                          <img className="songImage" src={img_obj?.url} alt={songInfo.album.name} onClick={handleClick } /> 
                         </MouseHoverList>
                    }
                  

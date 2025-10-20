@@ -75,7 +75,22 @@
 }
 
 
+.albumImage {
+  width: 300px;
+  height: 300px;
+  object-fit: cover; /* keeps proportions, crops if needed */
+}
+
+
 @media (max-width: 374px) {
+
+    
+.albumImage {
+  width: 250px;
+  height: 250px;
+
+}
+
    /* .album-font
     {
         font-size:19px;
@@ -101,6 +116,13 @@
     {
         font-size:21px;
     } */
+
+            
+    .albumImage {
+        width: 250px;
+        height: 250px;
+
+        }
 
     .album-grid-table {
       grid-template-columns: 1fr ; 

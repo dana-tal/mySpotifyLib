@@ -1,12 +1,10 @@
 
 import './ShortList.css';
 
-function ShortList({title,listItems,width,height}) {
+function ShortList({title,listItems}) {
 
-    const list_width = width+'px';
-    const list_height = height+'px';
   return (
-    <div className="short-list" style={{ width:list_width, height:list_height }}>
+    <div className="short-list" >
     <h3>{title}</h3>
     <ul>
         { listItems.map((item)=>{ return <li key={item}>{item}</li>} )  }

@@ -62,7 +62,7 @@ function AlbumPage() {
              
                 <div className="album-cell" >
                   {
-                    displayTop? <div onClick={handleClick}><ShortList title="Top Ten Albums" listItems={albumInfo.top_ten_albums} width={img_obj.width} height={img_obj.height} /></div> :
+                    displayTop? <div onClick={handleClick}><ShortList title="Top Ten Albums" listItems={albumInfo.top_ten_albums} /></div> :
                     <MouseHoverList list={albumInfo.more_albums} title={`More Albums of ${albumInfo.artists[0].name}`}>
                       <img src={img_obj?.url} alt={albumInfo.name} className="album-image" onClick={handleClick }/> 
                     </MouseHoverList>

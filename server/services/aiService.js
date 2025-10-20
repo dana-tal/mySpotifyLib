@@ -8,15 +8,17 @@ const model = new ChatOpenAI({
 });
 
 
-const getMoreAlbumsOfArtist =  async (artistName,albumsNum, excludeAlbum)=>{
+const getMoreAlbumsOfArtist =  async (artistName,albumsNum,  excludeAlbum = "")=>{
 
   const prompt_template = ChatPromptTemplate.fromMessages([
     ["system", "You are a music expert who is well-versed in famous singers, popular songs, and music albums."],
-    ["human", `Return exactly {albumsNum} album names by {artistName}, excluding "{excludeAlbum}". 
+    ["human", `Return exactly {albumsNum} album names by {artistName}, excluding "{excludeClause}". 
         The albums list should not contain duplicates. Respond only with a JSON array of album names, no explanations.`]
   ]);
 
-  const formatted_prompt = await prompt_template.formatMessages({ artistName,albumsNum,excludeAlbum });
+  const excludeClause =  excludeAlbum ? `, excluding "${excludeAlbum}"` : "";
+
+  const formatted_prompt = await prompt_template.formatMessages({ artistName,albumsNum,excludeClause });
   const response = await model.invoke(formatted_prompt);
 
    try 
@@ -102,7 +104,8 @@ const getTopTenSongsOfArtist = async (artistName) =>{
     ["system", "You are a music expert who is well-versed in famous singers, popular songs, and music albums."],
      ["human", `Return exactly 10 top most popular song names by {artistName}.
 Each of the songs must be from a different album.
-Respond only with a JSON array of song names, no explanations.`]
+Respond only with a valid JSON array of album names, like this:
+      ["Album 1", "Album 2", ...] .Do NOT include any object fields, keys, or explanations...`]
 
   ]);
 

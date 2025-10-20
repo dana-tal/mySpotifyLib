@@ -53,7 +53,20 @@
 }
 
 
+.artistImage {
+  width: 300px;
+  height: 300px;
+  object-fit: cover; /* keeps proportions, crops if needed */
+}
+
 @media (max-width: 767px) {
+
+   
+.artistImage {
+  width: 250px;
+  height: 250px;
+ 
+}
 
    .artist-grid-table {
       grid-template-columns: 1fr ; /* one column */

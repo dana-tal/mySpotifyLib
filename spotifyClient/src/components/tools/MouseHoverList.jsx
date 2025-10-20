@@ -44,8 +44,10 @@ export default function MouseHoverList({list,title="",children}) {
       >
         <Typography sx={{ p: 1 }}>
             { title && <h4>{title}</h4>}
-            <ul style={{ paddingRight:'10px'}}>
-                        { list.map((item)=>{ return <li key={item}>{item}</li>}) }
+            <ul style={{ paddingRight:'10px'}}>                        
+                         {
+                            Array.isArray(list) ? list.map((item) =>{ return <li key={item}>{item}</li>}): <li>(no items)</li>
+                         }
             </ul>
         </Typography>
       </Popover>

@@ -2,6 +2,7 @@
 import './ImagesGroup.css';
 import { isMobile } from '../../utils/genFuncs';
 import {Link} from 'react-router-dom';
+import MouseHoverPopover from './MouseHoverPopover';
 
 const is_mobile = isMobile();
 
@@ -26,14 +27,17 @@ function ImagesGroup({list,itemType}) {
                                                    my_obj = item;
                                                    image_obj = my_obj.images[1];
                                                    segment = 'albums';
-                                                   break;                                    
+                                                   break; 
+                                                                  
                                    }     
                             
                                     return (
                                         <div className="imageItem">
-                                            <Link key={my_obj.id} to={`/library/${segment}/${my_obj.id}`} className="list-image-link">
-                                                <img src={image_obj.url} alt={my_obj.name} style={{border: "1px solid brown",  width:image_width, height:image_height}} />
-                                            </Link>
+                                            <MouseHoverPopover hoverText={my_obj.name}>
+                                                <Link key={my_obj.id} to={`/library/${segment}/${my_obj.id}`} className="list-image-link">
+                                                    <img src={image_obj.url} alt={my_obj.name} style={{border: "1px solid brown",  width:image_width, height:image_height}} />
+                                                </Link>
+                                            </MouseHoverPopover>
                                         </div>
                                     );
                             })

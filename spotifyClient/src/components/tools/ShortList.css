@@ -8,8 +8,23 @@
   box-sizing: border-box;
   overflow-y: auto;   /* shows scrollbar only when content is taller */
   overflow-x: hidden; /* hides horizontal scrollbar */
+  font-size:17px;
+  width:320px;
+  height:320px;
 }
 
 div.short-list > ul {
   list-style-type: square !important;
+  
+}
+
+
+@media (max-width: 767px) {
+
+   
+.short-list {
+  width: 250px;
+  height: 250px;
+}
+
 }

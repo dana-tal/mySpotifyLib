@@ -103,7 +103,19 @@
 }
 
 
+.songImage {
+  width: 300px;
+  height: 300px;
+  object-fit: cover; /* keeps proportions, crops if needed */
+}
+
+
 @media  (min-width:300px) and  (max-width: 400px) {
+
+    .songImage {
+        width:250px;
+        height:250px;
+      }
 
     .song-frame
     {
@@ -128,6 +140,11 @@
 
 
 @media  (min-width:401px) and (max-width: 767px) {
+
+    .songImage {
+        width:250px;
+        height:250px;
+      }
 
     .song-frame
     {
